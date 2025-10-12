@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, Response, send_file
 from lxml import etree
 from datetime import date, timedelta
+import io
 import os
+from weasyprint import HTML
 
 app = Flask(__name__)
 
@@ -149,7 +151,7 @@ def home():
         numero_laudo = tree.find(f".//{{{tns}}}numero_laudo").text
         data_validade = tree.find(f".//{{{tns}}}data_validade").text
 
-        # Exibe diretamente o HTML do laudo
+        # Renderiza o laudo em HTML na tela
         return render_template(
             "laudo.html",
             numero_laudo=numero_laudo,
@@ -162,6 +164,34 @@ def home():
         )
 
     return render_template("form.html")
+
+
+# -----------------------
+# Rota para gerar PDF
+# -----------------------
+@app.route("/baixar_pdf", methods=["POST"])
+def baixar_pdf():
+    """Gera um PDF do laudo atual e faz o download."""
+    data = request.form
+
+    html_content = render_template(
+        "laudo.html",
+        numero_laudo=data["numero_laudo"],
+        data_emissao=data["data_emissao"],
+        data_validade=data["data_validade"],
+        cpf_cnpj=data["cpf_cnpj"],
+        nome_cliente=data["nome_cliente"],
+        qtd_caixas=data["qtd_caixas"],
+        modelo_caixas=data["modelo_caixas"],
+    )
+
+    pdf_file = io.BytesIO()
+    HTML(string=html_content).write_pdf(pdf_file)
+    pdf_file.seek(0)
+
+    nome_arquivo = f"Laudo_{data['numero_laudo']}.pdf"
+    return send_file(pdf_file, download_name=nome_arquivo, as_attachment=True)
+
 
 # -----------------------
 # Main
