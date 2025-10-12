@@ -31,10 +31,13 @@ def get_next_laudo_number():
 
 def gerar_barcode(numero_laudo):
     """Cria código de barras Code128 e salva em static/barcodes"""
-    barcode_path = os.path.join(BARCODE_FOLDER, f"{numero_laudo}.png")
-    code128 = barcode.get('code128', numero_laudo, writer=ImageWriter())
-    code128.save(barcode_path)
-    return f"/{barcode_path}"
+    base_name = os.path.join(BARCODE_FOLDER, numero_laudo)  # sem extensão
+    code128 = barcode.get("code128", numero_laudo, writer=ImageWriter())
+    saved_path = code128.save(base_name)  # gera .png automaticamente
+    rel_path = saved_path.replace(os.path.sep, "/")
+    if not rel_path.startswith("/"):
+        rel_path = "/" + rel_path
+    return rel_path
 
 
 def formatar_data(iso_date_str):
@@ -49,6 +52,7 @@ def gerar_laudo_soap(data_emissao_str):
     numero_formatado = f"017{numero:06d}"
     data_validade = data_emissao + timedelta(days=15)
 
+    # Dados fixos de exemplo
     cpf_cnpj_cliente = "59.508.117/0001-23"
     nome_cliente = "Organizações Salomão Martins Ltda"
     quantidade_caixas = 50
@@ -70,6 +74,7 @@ def gerar_laudo_soap(data_emissao_str):
     etree.SubElement(ResponseEl, "{%s}modelo_caixas" % NS_TNS).text = modelo_caixas
 
     return etree.tostring(Envelope, xml_declaration=True, encoding="utf-8")
+
 
 # -----------------------
 # Rotas SOAP
@@ -142,12 +147,14 @@ def home():
         produtos_utilizados = request.form["produtos_utilizados"]
         processo = request.form["processo"]
 
+        # Gera SOAP e extrai dados básicos
         response_xml = gerar_laudo_soap(data_emissao)
         tree = etree.fromstring(response_xml)
         tns = "https://laudo-rneg.onrender.com/soap"
         numero_laudo = tree.find(f".//{{{tns}}}numero_laudo").text
         data_validade = tree.find(f".//{{{tns}}}data_validade").text
 
+        # Cria o código de barras
         barcode_path = gerar_barcode(numero_laudo)
 
         return render_template(
@@ -168,14 +175,20 @@ def home():
     return render_template("form.html")
 
 
+# -----------------------
+# Rota para gerar PDF
+# -----------------------
 @app.route("/baixar_pdf", methods=["POST"])
 def baixar_pdf():
-    """Baixa o PDF do laudo atual"""
-    data = request.form
-    html_content = render_template("laudo.html", **data)
+    """Gera um PDF do laudo atual e faz o download"""
+    data = request.form.to_dict()
+    barcode_path = data.get("barcode_path")
+
+    html_content = render_template("laudo.html", **data, barcode_path=barcode_path)
     pdf_file = io.BytesIO()
-    HTML(string=html_content, base_url=request.base_url).write_pdf(pdf_file)
+    HTML(string=html_content, base_url=request.url_root).write_pdf(pdf_file)
     pdf_file.seek(0)
+
     nome_arquivo = f"Laudo_{data['numero_laudo']}.pdf"
     return send_file(pdf_file, download_name=nome_arquivo, as_attachment=True)
 
