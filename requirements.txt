@@ -4,5 +4,5 @@ weasyprint==63.1
 spyne==2.13.16
 lxml==5.2.2
 gunicorn==21.2.0
-python-barcode
-Pillow
+python-barcode==0.15
+Pillow==10.0.0
