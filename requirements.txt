@@ -1,4 +1,4 @@
 Flask==3.0.3
-zeep==4.2.1
-weasyprint==63.1
+spyne==2.13.16
+lxml==5.2.2
 gunicorn==21.2.0
