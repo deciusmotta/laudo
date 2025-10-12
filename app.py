@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, Response, send_file, url_for
+from flask import Flask, render_template, request, Response, send_file
 from lxml import etree
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 import io
 import os
 from weasyprint import HTML
@@ -37,6 +37,11 @@ def gerar_barcode(numero_laudo):
     return f"/{barcode_path}"
 
 
+def formatar_data(iso_date_str):
+    """Converte yyyy-mm-dd -> dd/mm/yyyy"""
+    return datetime.fromisoformat(iso_date_str).strftime("%d/%m/%Y")
+
+
 def gerar_laudo_soap(data_emissao_str):
     """Gera XML SOAP"""
     data_emissao = date.fromisoformat(data_emissao_str)
@@ -65,7 +70,6 @@ def gerar_laudo_soap(data_emissao_str):
     etree.SubElement(ResponseEl, "{%s}modelo_caixas" % NS_TNS).text = modelo_caixas
 
     return etree.tostring(Envelope, xml_declaration=True, encoding="utf-8")
-
 
 # -----------------------
 # Rotas SOAP
@@ -119,11 +123,6 @@ def wsdl():
       </xsd:element>
     </xsd:schema>
   </types>
-  <service name="LaudoService">
-    <port name="LaudoServicePort" binding="tns:LaudoServiceBinding">
-      <soap:address location="https://laudo-rneg.onrender.com/soap"/>
-    </port>
-  </service>
 </definitions>"""
     return Response(wsdl_content, mimetype="text/xml")
 
@@ -139,6 +138,9 @@ def home():
         nome_cliente = request.form["nome_cliente"]
         qtd_caixas = request.form["qtd_caixas"]
         modelo_caixas = request.form["modelo_caixas"]
+        equipamento = request.form["equipamento"]
+        produtos_utilizados = request.form["produtos_utilizados"]
+        processo = request.form["processo"]
 
         response_xml = gerar_laudo_soap(data_emissao)
         tree = etree.fromstring(response_xml)
@@ -151,12 +153,15 @@ def home():
         return render_template(
             "laudo.html",
             numero_laudo=numero_laudo,
-            data_emissao=data_emissao,
-            data_validade=data_validade,
+            data_emissao=formatar_data(data_emissao),
+            data_validade=formatar_data(data_validade),
             cpf_cnpj=cpf_cnpj,
             nome_cliente=nome_cliente,
             qtd_caixas=qtd_caixas,
             modelo_caixas=modelo_caixas,
+            equipamento=equipamento,
+            produtos_utilizados=produtos_utilizados,
+            processo=processo,
             barcode_path=barcode_path,
         )
 
@@ -167,9 +172,7 @@ def home():
 def baixar_pdf():
     """Baixa o PDF do laudo atual"""
     data = request.form
-    barcode_path = data.get("barcode_path")
-
-    html_content = render_template("laudo.html", **data, barcode_path=barcode_path)
+    html_content = render_template("laudo.html", **data)
     pdf_file = io.BytesIO()
     HTML(string=html_content, base_url=request.base_url).write_pdf(pdf_file)
     pdf_file.seek(0)
