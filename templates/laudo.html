@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<style>
+body { font-family: Arial, sans-serif; margin: 40px; }
+h1 { text-align: center; }
+h3 { margin-top: 20px; }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+td { padding: 5px; vertical-align: top; }
+p { line-height: 1.5; }
+</style>
+</head>
+<body>
+  <h1>ATESTADO DE HIGIENIZAÇÃO DE CAIXAS PLÁSTICAS</h1>
+  <p><strong>Nº:</strong> {{ numero_laudo }}</p>
+  <p><strong>Data de Emissão:</strong> {{ data_emissao }} |
+     <strong>Validade:</strong> {{ data_validade }}</p>
+
+  <h3>Cliente</h3>
+  <p><strong>Nome:</strong> {{ nome_cliente }}<br>
+     <strong>CPF/CNPJ:</strong> {{ cpf_cnpj }}</p>
+
+  <h3>Caixas Higienizadas</h3>
+  <p><strong>Quantidade:</strong> {{ qtd_caixas }}<br>
+     <strong>Modelo:</strong> {{ modelo_caixas }}</p>
+
+  <p>As caixas plásticas são higienizadas de acordo com a norma
+  <strong>ABNT NBR 15674</strong>, conforme processo certificado
+  pela empresa <strong>Organizações Salomão Martins Ltda</strong>
+  (CNPJ 59.508.117/0001-23).</p>
+
+  <p>Contagem, {{ data_emissao }}</p>
+</body>
+</html>

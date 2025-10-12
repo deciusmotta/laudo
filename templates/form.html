@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerar Laudo</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h2>Gerar Atestado de Higienização</h2>
+  <form method="post">
+    <label>Data de Emissão:</label>
+    <input type="date" name="data_emissao" required><br>
+
+    <label>CPF/CNPJ do Cliente:</label>
+    <input type="text" name="cpf_cnpj" required><br>
+
+    <label>Nome do Cliente:</label>
+    <input type="text" name="nome_cliente" required><br>
+
+    <label>Quantidade de Caixas:</label>
+    <input type="number" name="qtd_caixas" required><br>
+
+    <label>Modelo das Caixas:</label>
+    <input type="text" name="modelo_caixas" required><br>
+
+    <button type="submit">Gerar Laudo</button>
+  </form>
+</body>
+</html>
