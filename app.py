@@ -1,19 +1,23 @@
-from flask import Flask, render_template, request, Response, send_file, redirect, url_for
+from flask import Flask, render_template, request, Response, send_file, url_for
 from lxml import etree
 from datetime import date, timedelta
 import io
 import os
 from weasyprint import HTML
+import barcode
+from barcode.writer import ImageWriter
 
 app = Flask(__name__)
 
 ULTIMO_LAUDO_FILE = "ultimo_laudo.txt"
+BARCODE_FOLDER = "static/barcodes"
+os.makedirs(BARCODE_FOLDER, exist_ok=True)
 
 # -----------------------
 # Funções auxiliares
 # -----------------------
 def get_next_laudo_number():
-    """Gera um número sequencial de laudo."""
+    """Gera número sequencial do laudo"""
     if not os.path.exists(ULTIMO_LAUDO_FILE):
         with open(ULTIMO_LAUDO_FILE, "w") as f:
             f.write("0")
@@ -25,20 +29,26 @@ def get_next_laudo_number():
     return next_num
 
 
+def gerar_barcode(numero_laudo):
+    """Cria código de barras Code128 e salva em static/barcodes"""
+    barcode_path = os.path.join(BARCODE_FOLDER, f"{numero_laudo}.png")
+    code128 = barcode.get('code128', numero_laudo, writer=ImageWriter())
+    code128.save(barcode_path)
+    return f"/{barcode_path}"
+
+
 def gerar_laudo_soap(data_emissao_str):
-    """Monta XML SOAP do laudo."""
+    """Gera XML SOAP"""
     data_emissao = date.fromisoformat(data_emissao_str)
     numero = get_next_laudo_number()
     numero_formatado = f"017{numero:06d}"
     data_validade = data_emissao + timedelta(days=15)
 
-    # Dados fixos
     cpf_cnpj_cliente = "59.508.117/0001-23"
     nome_cliente = "Organizações Salomão Martins Ltda"
     quantidade_caixas = 50
     modelo_caixas = "Modelo X"
 
-    # Monta XML SOAP
     NS_SOAP = "http://schemas.xmlsoap.org/soap/envelope/"
     NS_TNS = "https://laudo-rneg.onrender.com/soap"
 
@@ -56,12 +66,12 @@ def gerar_laudo_soap(data_emissao_str):
 
     return etree.tostring(Envelope, xml_declaration=True, encoding="utf-8")
 
+
 # -----------------------
 # Rotas SOAP
 # -----------------------
 @app.route("/soap", methods=["POST"])
 def soap_endpoint():
-    """Endpoint SOAP que recebe XML e retorna o laudo."""
     xml_data = request.data
     tree = etree.fromstring(xml_data)
     ns = {"soap": "http://schemas.xmlsoap.org/soap/envelope/"}
@@ -78,7 +88,6 @@ def soap_endpoint():
 
 @app.route("/soap.wsdl", methods=["GET"])
 def wsdl():
-    """Retorna o WSDL do serviço SOAP."""
     wsdl_content = f"""<?xml version="1.0"?>
 <definitions name="LaudoService"
   targetNamespace="https://laudo-rneg.onrender.com/soap"
@@ -110,26 +119,6 @@ def wsdl():
       </xsd:element>
     </xsd:schema>
   </types>
-  <message name="gerar_laudoRequest">
-    <part name="parameters" element="tns:gerar_laudo"/>
-  </message>
-  <message name="gerar_laudoResponse">
-    <part name="parameters" element="tns:gerar_laudoResponse"/>
-  </message>
-  <portType name="LaudoServicePortType">
-    <operation name="gerar_laudo">
-      <input message="tns:gerar_laudoRequest"/>
-      <output message="tns:gerar_laudoResponse"/>
-    </operation>
-  </portType>
-  <binding name="LaudoServiceBinding" type="tns:LaudoServicePortType">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="gerar_laudo">
-      <soap:operation soapAction="gerar_laudo"/>
-      <input><soap:body use="literal"/></input>
-      <output><soap:body use="literal"/></output>
-    </operation>
-  </binding>
   <service name="LaudoService">
     <port name="LaudoServicePort" binding="tns:LaudoServiceBinding">
       <soap:address location="https://laudo-rneg.onrender.com/soap"/>
@@ -138,12 +127,12 @@ def wsdl():
 </definitions>"""
     return Response(wsdl_content, mimetype="text/xml")
 
+
 # -----------------------
 # Frontend Web
 # -----------------------
 @app.route("/", methods=["GET", "POST"])
 def home():
-    """Formulário web para gerar laudo."""
     if request.method == "POST":
         data_emissao = request.form["data_emissao"]
         cpf_cnpj = request.form["cpf_cnpj"]
@@ -151,14 +140,14 @@ def home():
         qtd_caixas = request.form["qtd_caixas"]
         modelo_caixas = request.form["modelo_caixas"]
 
-        # Gera XML SOAP e extrai informações
         response_xml = gerar_laudo_soap(data_emissao)
         tree = etree.fromstring(response_xml)
         tns = "https://laudo-rneg.onrender.com/soap"
         numero_laudo = tree.find(f".//{{{tns}}}numero_laudo").text
         data_validade = tree.find(f".//{{{tns}}}data_validade").text
 
-        # Renderiza HTML
+        barcode_path = gerar_barcode(numero_laudo)
+
         return render_template(
             "laudo.html",
             numero_laudo=numero_laudo,
@@ -168,34 +157,22 @@ def home():
             nome_cliente=nome_cliente,
             qtd_caixas=qtd_caixas,
             modelo_caixas=modelo_caixas,
+            barcode_path=barcode_path,
         )
 
     return render_template("form.html")
 
 
-# -----------------------
-# Rota para gerar PDF
-# -----------------------
 @app.route("/baixar_pdf", methods=["POST"])
 def baixar_pdf():
-    """Gera um PDF do laudo atual e faz o download."""
+    """Baixa o PDF do laudo atual"""
     data = request.form
+    barcode_path = data.get("barcode_path")
 
-    html_content = render_template(
-        "laudo.html",
-        numero_laudo=data["numero_laudo"],
-        data_emissao=data["data_emissao"],
-        data_validade=data["data_validade"],
-        cpf_cnpj=data["cpf_cnpj"],
-        nome_cliente=data["nome_cliente"],
-        qtd_caixas=data["qtd_caixas"],
-        modelo_caixas=data["modelo_caixas"],
-    )
-
+    html_content = render_template("laudo.html", **data, barcode_path=barcode_path)
     pdf_file = io.BytesIO()
     HTML(string=html_content, base_url=request.base_url).write_pdf(pdf_file)
     pdf_file.seek(0)
-
     nome_arquivo = f"Laudo_{data['numero_laudo']}.pdf"
     return send_file(pdf_file, download_name=nome_arquivo, as_attachment=True)
 
