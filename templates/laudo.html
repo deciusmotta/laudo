@@ -1,50 +1,85 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Laudo {{ numero_laudo }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Atestado de Higienização {{ numero_laudo }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: white; font-size: 14px; }
+    h2 { text-align: center; text-transform: uppercase; font-weight: bold; margin-bottom: 10px; }
+    .header { border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
+    .barcode { position: absolute; right: 40px; top: 60px; }
+    .section-title { font-weight: bold; margin-top: 15px; }
+    p { margin: 0; }
+  </style>
 </head>
-<body class="bg-white">
-<div class="container py-5">
-    <div class="card shadow p-4">
-        <h2 class="text-center mb-4">Laudo Técnico</h2>
-
-        <p><strong>Número do Laudo:</strong> {{ numero_laudo }}</p>
-        <p><strong>Data de Emissão:</strong> {{ data_emissao }}</p>
-        <p><strong>Data de Validade:</strong> {{ data_validade }}</p>
-
-        <hr>
-        <h5>Informações do Cliente</h5>
-        <p><strong>Nome:</strong> {{ nome_cliente }}</p>
-        <p><strong>CPF/CNPJ:</strong> {{ cpf_cnpj }}</p>
-
-        <hr>
-        <h5>Detalhes do Produto</h5>
-        <p><strong>Quantidade de Caixas:</strong> {{ qtd_caixas }}</p>
-        <p><strong>Modelo:</strong> {{ modelo_caixas }}</p>
-
-        <hr>
-        <p class="text-muted text-center mt-4">
-            Documento gerado automaticamente em {{ data_emissao }}.<br>
-            Válido até {{ data_validade }}.
-        </p>
-
-        <div class="text-center mt-4 d-flex justify-content-center gap-3">
-            <a href="/" class="btn btn-secondary">Voltar</a>
-
-            <form action="/baixar_pdf" method="POST">
-                <input type="hidden" name="numero_laudo" value="{{ numero_laudo }}">
-                <input type="hidden" name="data_emissao" value="{{ data_emissao }}">
-                <input type="hidden" name="data_validade" value="{{ data_validade }}">
-                <input type="hidden" name="cpf_cnpj" value="{{ cpf_cnpj }}">
-                <input type="hidden" name="nome_cliente" value="{{ nome_cliente }}">
-                <input type="hidden" name="qtd_caixas" value="{{ qtd_caixas }}">
-                <input type="hidden" name="modelo_caixas" value="{{ modelo_caixas }}">
-                <button type="submit" class="btn btn-primary">Baixar PDF</button>
-            </form>
-        </div>
+<body class="p-5">
+  <div class="position-relative">
+    <div class="barcode">
+      <img src="{{ barcode_path }}" width="180">
+      <p class="text-center small">Código: {{ numero_laudo }}</p>
     </div>
-</div>
+    <div class="text-center header">
+      <h2>ATESTADO DE HIGIENIZAÇÃO DE CAIXAS PLÁSTICAS</h2>
+      <p><em>Conforme Norma ABNT NBR 15674</em></p>
+    </div>
+  </div>
+
+  <p><strong>Nº:</strong> {{ numero_laudo }}</p>
+  <p>O Atestado de Higienização de Caixas Plásticas Vazias é válido até <strong>{{ data_validade }}</strong></p>
+  <hr>
+
+  <p>Atestamos para os devidos fins que o processo de Higienização de Caixas Plásticas utilizado pela empresa
+  <strong>{{ nome_cliente }}</strong>, portadora do CNPJ <strong>{{ cpf_cnpj }}</strong>, localizada à Rod. BR-040, 383 – Galpão 01,
+  Bairro Vila Paris, Contagem, MG, CEP 32.150-340; é realizado de acordo com as normas e padrões necessários.</p>
+
+  <h6 class="section-title">Equipamento</h6>
+  <p>Máquina Lavadora Tipo Túnel</p>
+
+  <h6 class="section-title">Produtos Utilizados</h6>
+  <ul>
+    <li>KALYCLEAN – Registro MS 315460158 – Lote 10013020 – Concentração 0,5%</li>
+    <li>KALYCLEAN Marca 253 – Registro MS 315460140 – Lote 10013703 – Concentração 2,0%</li>
+  </ul>
+
+  <h6 class="section-title">Processo</h6>
+  <ul>
+    <li>Remoção manual de excedentes de sujidades.</li>
+    <li>Enxágue inicial e lavagem com o produto Kalyclean C253.</li>
+    <li>Enxágue final com aplicação do Kalyclean S370.</li>
+  </ul>
+
+  <h6 class="section-title">Cliente</h6>
+  <p><strong>{{ nome_cliente }}</strong></p>
+  <p><strong>CPF/CNPJ:</strong> {{ cpf_cnpj }}</p>
+
+  <h6 class="section-title">Produto</h6>
+  <p><strong>Total de Caixas Higienizadas:</strong> {{ qtd_caixas }}</p>
+  <p><strong>Modelo:</strong> {{ modelo_caixas }}</p>
+
+  <hr>
+  <p>As caixas plásticas são higienizadas conforme NBR 15.674, em cumprimento à IN Conjunta 009/2002 SARC-ANVISA-INMETRO.</p>
+
+  <p><strong>Validade:</strong> {{ data_validade }}</p>
+  <p class="mt-4">Contagem, {{ data_emissao }}</p>
+
+  <p class="mt-4 small text-muted">
+    Confira a autenticidade deste laudo através do código de barras impresso ao lado, integrado ao nosso WebService.
+  </p>
+
+  <div class="text-center mt-4 d-flex justify-content-center gap-3">
+    <a href="/" class="btn btn-secondary">Voltar</a>
+    <form action="/baixar_pdf" method="POST">
+      <input type="hidden" name="numero_laudo" value="{{ numero_laudo }}">
+      <input type="hidden" name="data_emissao" value="{{ data_emissao }}">
+      <input type="hidden" name="data_validade" value="{{ data_validade }}">
+      <input type="hidden" name="cpf_cnpj" value="{{ cpf_cnpj }}">
+      <input type="hidden" name="nome_cliente" value="{{ nome_cliente }}">
+      <input type="hidden" name="qtd_caixas" value="{{ qtd_caixas }}">
+      <input type="hidden" name="modelo_caixas" value="{{ modelo_caixas }}">
+      <input type="hidden" name="barcode_path" value="{{ barcode_path }}">
+      <button type="submit" class="btn btn-primary">Baixar PDF</button>
+    </form>
+  </div>
 </body>
 </html>
