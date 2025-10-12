@@ -1,29 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Gerar Laudo</title>
-<link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8">
+  <title>Gerar Laudo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<h2>Gerar Laudo de Higienização</h2>
-<form method="post">
-<label>Data de Emissão:</label>
-<input type="date" name="data_emissao" required><br>
-
-<label>CPF/CNPJ do Cliente:</label>
-<input type="text" name="cpf_cnpj" required><br>
-
-<label>Nome do Cliente:</label>
-<input type="text" name="nome_cliente" required><br>
-
-<label>Quantidade de Caixas:</label>
-<input type="number" name="qtd_caixas" required><br>
-
-<label>Modelo das Caixas:</label>
-<input type="text" name="modelo_caixas" required><br>
-
-<button type="submit">Gerar Laudo</button>
-</form>
+<body class="bg-light">
+<div class="container py-5">
+  <div class="card p-4 shadow">
+    <h3 class="text-center mb-4">Gerar Novo Laudo</h3>
+    <form action="/" method="POST">
+      <div class="mb-3">
+        <label class="form-label">Data de Emissão</label>
+        <input type="date" name="data_emissao" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">CPF/CNPJ do Cliente</label>
+        <input type="text" name="cpf_cnpj" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Nome do Cliente</label>
+        <input type="text" name="nome_cliente" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Quantidade de Caixas</label>
+        <input type="number" name="qtd_caixas" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Modelo de Caixa</label>
+        <input type="text" name="modelo_caixas" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Equipamento</label>
+        <input type="text" name="equipamento" class="form-control" placeholder="Ex: Máquina Lavadora Tipo Túnel" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Produtos Utilizados</label>
+        <textarea name="produtos_utilizados" class="form-control" rows="3" placeholder="Descreva os produtos utilizados" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Processo</label>
+        <textarea name="processo" class="form-control" rows="3" placeholder="Descreva o processo de higienização" required></textarea>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary px-4">Gerar Laudo</button>
+      </div>
+    </form>
+  </div>
+</div>
 </body>
 </html>
