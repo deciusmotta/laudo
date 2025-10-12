@@ -1,135 +1,45 @@
-from flask import Flask, request, Response
-from lxml import etree
-from datetime import date, timedelta
-import os
+from flask import Flask, render_template, request, send_file
+from zeep import Client
+from datetime import datetime
+from weasyprint import HTML
+import io
 
 app = Flask(__name__)
 
-ULTIMO_LAUDO_FILE = "ultimo_laudo.txt"
+SOAP_URL = "https://laudoservice.onrender.com/soap?wsdl"
 
-def get_next_laudo_number():
-    """Gera número sequencial do laudo"""
-    if not os.path.exists(ULTIMO_LAUDO_FILE):
-        with open(ULTIMO_LAUDO_FILE, "w") as f:
-            f.write("0")
-    with open(ULTIMO_LAUDO_FILE, "r") as f:
-        last = int(f.read().strip() or "0")
-    next_num = last + 1
-    with open(ULTIMO_LAUDO_FILE, "w") as f:
-        f.write(str(next_num))
-    return next_num
+@app.route("/", methods=["GET", "POST"])
+def home():
+    if request.method == "POST":
+        data_emissao = request.form["data_emissao"]
+        cpf_cnpj = request.form["cpf_cnpj"]
+        nome_cliente = request.form["nome_cliente"]
+        qtd_caixas = request.form["qtd_caixas"]
+        modelo_caixas = request.form["modelo_caixas"]
 
-# --- Função para gerar resposta SOAP ---
-def gerar_laudo_soap(data_emissao_str):
-    data_emissao = date.fromisoformat(data_emissao_str)
-    numero = get_next_laudo_number()
-    numero_formatado = f"017{numero:06d}"
-    data_validade = data_emissao + timedelta(days=15)
+        client = Client(SOAP_URL)
+        data_emissao_dt = datetime.strptime(data_emissao, "%Y-%m-%d").date()
+        response = client.service.gerar_laudo(data_emissao_dt)
 
-    # Dados fixos
-    cpf_cnpj_cliente = "59.508.117/0001-23"
-    nome_cliente = "Organizações Salomão Martins Ltda"
-    quantidade_caixas = 50
-    modelo_caixas = "Modelo X"
+        html = render_template(
+            "laudo.html",
+            numero_laudo=response.numero_laudo,
+            data_emissao=response.data_emissao,
+            data_validade=response.data_validade,
+            cpf_cnpj=cpf_cnpj,
+            nome_cliente=nome_cliente,
+            qtd_caixas=qtd_caixas,
+            modelo_caixas=modelo_caixas,
+        )
 
-    # Monta XML SOAP
-    NS_SOAP = "http://schemas.xmlsoap.org/soap/envelope/"
-    NS_TNS = "http://laudoservice.onrender.com/soap"
+        pdf = io.BytesIO()
+        HTML(string=html).write_pdf(pdf)
+        pdf.seek(0)
+        return send_file(pdf, download_name=f"Laudo_{response.numero_laudo}.pdf", as_attachment=True)
 
-    Envelope = etree.Element("{%s}Envelope" % NS_SOAP, nsmap={"soap": NS_SOAP, "tns": NS_TNS})
-    Body = etree.SubElement(Envelope, "{%s}Body" % NS_SOAP)
-    ResponseEl = etree.SubElement(Body, "{%s}gerar_laudoResponse" % NS_TNS)
-    
-    etree.SubElement(ResponseEl, "{%s}numero_laudo" % NS_TNS).text = numero_formatado
-    etree.SubElement(ResponseEl, "{%s}data_emissao" % NS_TNS).text = data_emissao.isoformat()
-    etree.SubElement(ResponseEl, "{%s}data_validade" % NS_TNS).text = data_validade.isoformat()
-    etree.SubElement(ResponseEl, "{%s}cpf_cnpj_cliente" % NS_TNS).text = cpf_cnpj_cliente
-    etree.SubElement(ResponseEl, "{%s}nome_cliente" % NS_TNS).text = nome_cliente
-    etree.SubElement(ResponseEl, "{%s}quantidade_caixas" % NS_TNS).text = str(quantidade_caixas)
-    etree.SubElement(ResponseEl, "{%s}modelo_caixas" % NS_TNS).text = modelo_caixas
-
-    return etree.tostring(Envelope, xml_declaration=True, encoding="utf-8")
-
-# --- Endpoint SOAP ---
-@app.route("/soap", methods=["POST"])
-def soap_endpoint():
-    # Parse XML recebido
-    xml_data = request.data
-    tree = etree.fromstring(xml_data)
-    ns = {"soap": "http://schemas.xmlsoap.org/soap/envelope/"}
-    body = tree.find("soap:Body", ns)
-
-    # Extrai data_emissao do request
-    data_emissao_el = body.find(".//data_emissao")
-    if data_emissao_el is None:
-        return Response("Missing data_emissao", status=400)
-    data_emissao_str = data_emissao_el.text
-
-    response_xml = gerar_laudo_soap(data_emissao_str)
-    return Response(response_xml, mimetype="text/xml; charset=utf-8")
-
-# --- Endpoint WSDL simples ---
-@app.route("/soap?wsdl", methods=["GET"])
-def wsdl():
-    wsdl_content = f"""<?xml version="1.0"?>
-<definitions name="LaudoService"
-  targetNamespace="http://laudoservice.onrender.com/soap"
-  xmlns:tns="http://laudoservice.onrender.com/soap"
-  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  xmlns="http://schemas.xmlsoap.org/wsdl/">
-  <types>
-    <xsd:schema targetNamespace="http://laudoservice.onrender.com/soap">
-      <xsd:element name="gerar_laudo">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="data_emissao" type="xsd:date"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-      <xsd:element name="gerar_laudoResponse">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="numero_laudo" type="xsd:string"/>
-            <xsd:element name="data_emissao" type="xsd:date"/>
-            <xsd:element name="data_validade" type="xsd:date"/>
-            <xsd:element name="cpf_cnpj_cliente" type="xsd:string"/>
-            <xsd:element name="nome_cliente" type="xsd:string"/>
-            <xsd:element name="quantidade_caixas" type="xsd:int"/>
-            <xsd:element name="modelo_caixas" type="xsd:string"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-    </xsd:schema>
-  </types>
-  <message name="gerar_laudoRequest">
-    <part name="parameters" element="tns:gerar_laudo"/>
-  </message>
-  <message name="gerar_laudoResponse">
-    <part name="parameters" element="tns:gerar_laudoResponse"/>
-  </message>
-  <portType name="LaudoServicePortType">
-    <operation name="gerar_laudo">
-      <input message="tns:gerar_laudoRequest"/>
-      <output message="tns:gerar_laudoResponse"/>
-    </operation>
-  </portType>
-  <binding name="LaudoServiceBinding" type="tns:LaudoServicePortType">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="gerar_laudo">
-      <soap:operation soapAction="gerar_laudo"/>
-      <input><soap:body use="literal"/></input>
-      <output><soap:body use="literal"/></output>
-    </operation>
-  </binding>
-  <service name="LaudoService">
-    <port name="LaudoServicePort" binding="tns:LaudoServiceBinding">
-      <soap:address location="https://laudoservice.onrender.com/soap"/>
-    </port>
-  </service>
-</definitions>"""
-    return Response(wsdl_content, mimetype="text/xml")
+    return render_template("form.html")
 
 if __name__ == "__main__":
+    import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
