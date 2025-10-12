@@ -1,45 +1,107 @@
-from flask import Flask, render_template, request, send_file
-from zeep import Client
-from datetime import datetime
-from weasyprint import HTML
-import io
+# --- PATCH DE COMPATIBILIDADE ---
+# Spyne depende do módulo cgi, que foi removido no Python 3.13.
+# Este patch cria um módulo cgi falso com a função parse_header.
+import sys, types
+if 'cgi' not in sys.modules:
+    sys.modules['cgi'] = types.ModuleType('cgi')
+    sys.modules['cgi'].parse_header = lambda x: ('', {})
+
+# --- IMPORTS NORMAIS ---
+from flask import Flask, request, Response
+from spyne import Application, rpc, ServiceBase, Unicode, Integer, Date, ComplexModel
+from spyne.protocol.soap import Soap11
+from spyne.server.wsgi import WsgiApplication
+from io import BytesIO
+from datetime import date, timedelta
+import logging, os
+
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 
-SOAP_URL = "https://laudoservice.onrender.com/soap?wsdl"
+ULTIMO_LAUDO_FILE = "ultimo_laudo.txt"
 
-@app.route("/", methods=["GET", "POST"])
-def home():
-    if request.method == "POST":
-        data_emissao = request.form["data_emissao"]
-        cpf_cnpj = request.form["cpf_cnpj"]
-        nome_cliente = request.form["nome_cliente"]
-        qtd_caixas = request.form["qtd_caixas"]
-        modelo_caixas = request.form["modelo_caixas"]
+def get_next_laudo_number():
+    """Gera número sequencial do laudo"""
+    if not os.path.exists(ULTIMO_LAUDO_FILE):
+        with open(ULTIMO_LAUDO_FILE, "w") as f:
+            f.write("0")
+    with open(ULTIMO_LAUDO_FILE, "r") as f:
+        last = int(f.read().strip() or "0")
+    next_num = last + 1
+    with open(ULTIMO_LAUDO_FILE, "w") as f:
+        f.write(str(next_num))
+    return next_num
 
-        client = Client(SOAP_URL)
-        data_emissao_dt = datetime.strptime(data_emissao, "%Y-%m-%d").date()
-        response = client.service.gerar_laudo(data_emissao_dt)
 
-        html = render_template(
-            "laudo.html",
-            numero_laudo=response.numero_laudo,
-            data_emissao=response.data_emissao,
-            data_validade=response.data_validade,
-            cpf_cnpj=cpf_cnpj,
-            nome_cliente=nome_cliente,
-            qtd_caixas=qtd_caixas,
-            modelo_caixas=modelo_caixas,
+# --- Modelo de retorno ---
+class LaudoResponse(ComplexModel):
+    numero_laudo = Unicode
+    data_emissao = Date
+    data_validade = Date
+    cpf_cnpj_cliente = Unicode
+    nome_cliente = Unicode
+    quantidade_caixas = Integer
+    modelo_caixas = Unicode
+
+
+# --- Serviço SOAP ---
+class LaudoService(ServiceBase):
+    @rpc(Date, _returns=LaudoResponse)
+    def gerar_laudo(ctx, data_emissao):
+        """Gera um laudo a partir da data de emissão"""
+        numero = get_next_laudo_number()
+        numero_formatado = f"017{numero:06d}"
+        data_validade = data_emissao + timedelta(days=15)
+
+        return LaudoResponse(
+            numero_laudo=numero_formatado,
+            data_emissao=data_emissao,
+            data_validade=data_validade,
+            cpf_cnpj_cliente="59.508.117/0001-23",
+            nome_cliente="Organizações Salomão Martins Ltda",
+            quantidade_caixas=50,
+            modelo_caixas="Modelo X"
         )
 
-        pdf = io.BytesIO()
-        HTML(string=html).write_pdf(pdf)
-        pdf.seek(0)
-        return send_file(pdf, download_name=f"Laudo_{response.numero_laudo}.pdf", as_attachment=True)
 
-    return render_template("form.html")
+# --- Configuração SOAP ---
+soap_app = Application(
+    [LaudoService],
+    tns='http://laudoservice.onrender.com/soap',
+    name='LaudoService',
+    in_protocol=Soap11(validator='lxml'),
+    out_protocol=Soap11()
+)
+wsgi_app = WsgiApplication(soap_app)
+
+# --- Endpoint SOAP ---
+@app.route("/soap", methods=['GET', 'POST'])
+def soap_server():
+    buf = BytesIO()
+    def start_response(status, headers):
+        buf.status = status
+        buf.headers = headers
+        return buf.write
+    result = wsgi_app(request.environ, start_response)
+    response_data = b"".join(result)
+    return Response(response_data, mimetype="text/xml; charset=utf-8")
+
+# --- Endpoint WSDL ---
+@app.route("/soap?wsdl", methods=["GET"])
+def wsdl():
+    wsdl_content = soap_app.get_interface_document('wsdl')
+    return Response(wsdl_content, mimetype='text/xml')
+
+# --- Página inicial ---
+@app.route("/")
+def home():
+    return """
+    <h2>LaudoService SOAP ativo</h2>
+    <p>WSDL disponível em: <a href="/soap?wsdl">/soap?wsdl</a></p>
+    <p>Endpoint SOAP: /soap (POST)</p>
+    """
 
 if __name__ == "__main__":
-    import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
