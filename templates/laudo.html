@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Laudo MASTER</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 30px; }
+h2 { text-align: center; }
+hr { margin: 20px 0; }
+.barcode { text-align: center; margin-top: 20px; }
+.campo { margin-bottom: 10px; }
+.campo b { display: inline-block; width: 200px; }
+</style>
+</head>
+<body>
+<div style="text-align:center;">
+<img src="/static/images/logo_master.png" alt="Logo MASTER" width="300">
+</div>
+
+
+<h2>Laudo de Higienização de Caixas Plásticas</h2>
+
+
+<div class="campo"><b>Data de Emissão:</b> {{ data_emissao }}</div>
+<div class="campo"><b>Data de Validade:</b> {{ data_validade }}</div>
+
+
+<div class="campo"><b>Equipamento:</b> {{ equipamento }}</div>
+
+
+<div class="campo"><b>Produtos Utilizados:</b><br>{{ produtos_utilizados|replace('\n','<br>')|safe }}</div>
+<div class="campo"><b>Processo:</b><br>{{ processo|replace('\n','<br>')|safe }}</div>
+
+
+<div class="campo"><b>Endereço do Cliente:</b> {{ endereco_cliente }}</div>
+<div class="campo"><b>Bairro:</b> {{ bairro_cliente }}</div>
+<div class="campo"><b>UF:</b> {{ uf_cliente }}</div>
+<div class="campo"><b>CEP:</b> {{ cep_cliente }}</div>
+
+
+<div class="campo"><b>Veículo Transportador:</b> {{ veiculo }}</div>
+<div class="campo"><b>Marca Placa/UF:</b> {{ placa }}</div>
+<div class="campo"><b>Motorista:</b> {{ motorista }}</div>
+<div class="campo"><b>CPF/ID Motorista:</b> {{ cpf_motorista }}</div>
+
+
+<div class="campo"><b>Total de Caixas Higienizadas:</b> {{ qtd_caixas }}</div>
+<div class="campo"><b>Modelo de Caixa:</b> {{ modelo_caixas }}</div>
+
+
+<hr>
+<p>Atestamos para os devidos fins que o processo de Higienização de Caixas Plásticas utilizado pela empresa Organizações Salomão Martins Ltda, portadora do CNPJ 59.508.117/0001-23, CREA MG 241837, Registro IMA Nº 19.336, localizada à Rod. BR-040, 383 – Galpão 01, Bairro Vila Paris, Contagem, Minas Gerais, no CEP 32.150-340; é realizado de acordo com as normas e padrões necessários.</p>
+
+
+<div class="barcode">
+<img src="{{ barcode_path }}" alt="Código de Barras"><br>
+Código: {{ numero_laudo }}
+</div>
+</body>
+</html>
