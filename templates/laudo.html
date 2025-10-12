@@ -1,59 +1,60 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Atestado de Higienização {{ numero_laudo }}</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body { background: white; font-size: 14px; }
-    h2 { text-align: center; text-transform: uppercase; font-weight: bold; margin-bottom: 10px; }
-    @media print {
-      .no-print { display: none !important; }
-      body { margin: 0; }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Laudo MASTER</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 30px; }
+h2 { text-align: center; }
+hr { margin: 20px 0; }
+.barcode { text-align: center; margin-top: 20px; }
+.campo { margin-bottom: 10px; }
+.campo b { display: inline-block; width: 200px; }
+</style>
 </head>
-<body class="p-5">
-  <div class="text-center">
-    <h2>ATESTADO DE HIGIENIZAÇÃO DE CAIXAS PLÁSTICAS</h2>
-    <p><em>Conforme Norma ABNT NBR 15674</em></p>
-  </div>
+<body>
+<div style="text-align:center;">
+<img src="/static/images/logo_master.png" alt="Logo MASTER" width="300">
+</div>
 
-  <p><strong>Nº:</strong> {{ numero_laudo }}</p>
-  <p>O Atestado é válido até <strong>{{ data_validade }}</strong></p>
-  <hr>
 
-  <p>Atestamos que o processo de higienização utilizado pela empresa <strong>{{ nome_cliente }}</strong>,
-  CNPJ <strong>{{ cpf_cnpj }}</strong>, é realizado conforme normas e padrões necessários.</p>
+<h2>Laudo de Higienização de Caixas Plásticas</h2>
 
-  <h6 class="mt-3"><strong>Equipamento:</strong></h6>
-  <p>{{ equipamento }}</p>
 
-  <h6 class="mt-3"><strong>Produtos Utilizados:</strong></h6>
-  <pre>{{ produtos_utilizados }}</pre>
+<div class="campo"><b>Data de Emissão:</b> {{ data_emissao }}</div>
+<div class="campo"><b>Data de Validade:</b> {{ data_validade }}</div>
 
-  <h6 class="mt-3"><strong>Processo:</strong></h6>
-  <pre>{{ processo }}</pre>
 
-  <h6 class="mt-3"><strong>Total de Caixas Higienizadas:</strong></h6>
-  <p>{{ qtd_caixas }}</p>
+<div class="campo"><b>Equipamento:</b> {{ equipamento }}</div>
 
-  <h6 class="mt-3"><strong>Modelo de Caixa:</strong></h6>
-  <p>{{ modelo_caixas }}</p>
 
-  <hr>
-  <p>As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento à IN Conjunta 009/2002 SARC–ANVISA–INMETRO.</p>
+<div class="campo"><b>Produtos Utilizados:</b><br>{{ produtos_utilizados|replace('\n','<br>')|safe }}</div>
+<div class="campo"><b>Processo:</b><br>{{ processo|replace('\n','<br>')|safe }}</div>
 
-  <p><strong>Validade:</strong> {{ data_validade }}</p>
-  <p class="mt-3">Contagem, {{ data_emissao }}</p>
 
-  <div class="mt-5 text-center">
-    <img src="{{ barcode_path }}" width="200"><br>
-    <small>Código: {{ numero_laudo }}</small>
-  </div>
+<div class="campo"><b>Endereço do Cliente:</b> {{ endereco_cliente }}</div>
+<div class="campo"><b>Bairro:</b> {{ bairro_cliente }}</div>
+<div class="campo"><b>UF:</b> {{ uf_cliente }}</div>
+<div class="campo"><b>CEP:</b> {{ cep_cliente }}</div>
 
-  <div class="text-center mt-4 no-print">
-    <a href="/" class="btn btn-secondary">Voltar</a>
-  </div>
+
+<div class="campo"><b>Veículo Transportador:</b> {{ veiculo }}</div>
+<div class="campo"><b>Marca Placa/UF:</b> {{ placa }}</div>
+<div class="campo"><b>Motorista:</b> {{ motorista }}</div>
+<div class="campo"><b>CPF/ID Motorista:</b> {{ cpf_motorista }}</div>
+
+
+<div class="campo"><b>Total de Caixas Higienizadas:</b> {{ qtd_caixas }}</div>
+<div class="campo"><b>Modelo de Caixa:</b> {{ modelo_caixas }}</div>
+
+
+<hr>
+<p>Atestamos para os devidos fins que o processo de Higienização de Caixas Plásticas utilizado pela empresa Organizações Salomão Martins Ltda, portadora do CNPJ 59.508.117/0001-23, CREA MG 241837, Registro IMA Nº 19.336, localizada à Rod. BR-040, 383 – Galpão 01, Bairro Vila Paris, Contagem, Minas Gerais, no CEP 32.150-340; é realizado de acordo com as normas e padrões necessários.</p>
+
+
+<div class="barcode">
+<img src="{{ barcode_path }}" alt="Código de Barras"><br>
+Código: {{ numero_laudo }}
+</div>
 </body>
 </html>
