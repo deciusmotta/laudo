@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response, send_file
+from flask import Flask, render_template, request, Response, send_file, redirect, url_for
 from lxml import etree
 from datetime import date, timedelta
 import io
@@ -13,6 +13,7 @@ ULTIMO_LAUDO_FILE = "ultimo_laudo.txt"
 # Funções auxiliares
 # -----------------------
 def get_next_laudo_number():
+    """Gera um número sequencial de laudo."""
     if not os.path.exists(ULTIMO_LAUDO_FILE):
         with open(ULTIMO_LAUDO_FILE, "w") as f:
             f.write("0")
@@ -23,7 +24,9 @@ def get_next_laudo_number():
         f.write(str(next_num))
     return next_num
 
+
 def gerar_laudo_soap(data_emissao_str):
+    """Monta XML SOAP do laudo."""
     data_emissao = date.fromisoformat(data_emissao_str)
     numero = get_next_laudo_number()
     numero_formatado = f"017{numero:06d}"
@@ -37,7 +40,7 @@ def gerar_laudo_soap(data_emissao_str):
 
     # Monta XML SOAP
     NS_SOAP = "http://schemas.xmlsoap.org/soap/envelope/"
-    NS_TNS = "http://laudoservice.onrender.com/soap"
+    NS_TNS = "https://laudo-rneg.onrender.com/soap"
 
     Envelope = etree.Element("{%s}Envelope" % NS_SOAP, nsmap={"soap": NS_SOAP, "tns": NS_TNS})
     Body = etree.SubElement(Envelope, "{%s}Body" % NS_SOAP)
@@ -58,6 +61,7 @@ def gerar_laudo_soap(data_emissao_str):
 # -----------------------
 @app.route("/soap", methods=["POST"])
 def soap_endpoint():
+    """Endpoint SOAP que recebe XML e retorna o laudo."""
     xml_data = request.data
     tree = etree.fromstring(xml_data)
     ns = {"soap": "http://schemas.xmlsoap.org/soap/envelope/"}
@@ -71,17 +75,19 @@ def soap_endpoint():
     response_xml = gerar_laudo_soap(data_emissao_str)
     return Response(response_xml, mimetype="text/xml; charset=utf-8")
 
-@app.route("/soap?wsdl", methods=["GET"])
+
+@app.route("/soap.wsdl", methods=["GET"])
 def wsdl():
+    """Retorna o WSDL do serviço SOAP."""
     wsdl_content = f"""<?xml version="1.0"?>
 <definitions name="LaudoService"
-  targetNamespace="http://laudoservice.onrender.com/soap"
-  xmlns:tns="http://laudoservice.onrender.com/soap"
+  targetNamespace="https://laudo-rneg.onrender.com/soap"
+  xmlns:tns="https://laudo-rneg.onrender.com/soap"
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.xmlsoap.org/wsdl/">
   <types>
-    <xsd:schema targetNamespace="http://laudoservice.onrender.com/soap">
+    <xsd:schema targetNamespace="https://laudo-rneg.onrender.com/soap">
       <xsd:element name="gerar_laudo">
         <xsd:complexType>
           <xsd:sequence>
@@ -126,7 +132,7 @@ def wsdl():
   </binding>
   <service name="LaudoService">
     <port name="LaudoServicePort" binding="tns:LaudoServiceBinding">
-      <soap:address location="https://laudoservice.onrender.com/soap"/>
+      <soap:address location="https://laudo-rneg.onrender.com/soap"/>
     </port>
   </service>
 </definitions>"""
@@ -137,6 +143,7 @@ def wsdl():
 # -----------------------
 @app.route("/", methods=["GET", "POST"])
 def home():
+    """Formulário web para gerar laudo."""
     if request.method == "POST":
         data_emissao = request.form["data_emissao"]
         cpf_cnpj = request.form["cpf_cnpj"]
@@ -144,14 +151,14 @@ def home():
         qtd_caixas = request.form["qtd_caixas"]
         modelo_caixas = request.form["modelo_caixas"]
 
-        # Gera SOAP e extrai informações
+        # Gera XML SOAP e extrai informações
         response_xml = gerar_laudo_soap(data_emissao)
         tree = etree.fromstring(response_xml)
-        tns = "http://laudoservice.onrender.com/soap"
+        tns = "https://laudo-rneg.onrender.com/soap"
         numero_laudo = tree.find(f".//{{{tns}}}numero_laudo").text
         data_validade = tree.find(f".//{{{tns}}}data_validade").text
 
-        # Renderiza o laudo em HTML na tela
+        # Renderiza HTML
         return render_template(
             "laudo.html",
             numero_laudo=numero_laudo,
@@ -186,7 +193,7 @@ def baixar_pdf():
     )
 
     pdf_file = io.BytesIO()
-    HTML(string=html_content).write_pdf(pdf_file)
+    HTML(string=html_content, base_url=request.base_url).write_pdf(pdf_file)
     pdf_file.seek(0)
 
     nome_arquivo = f"Laudo_{data['numero_laudo']}.pdf"
