@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, send_file, Response
+from flask import Flask, render_template, request, Response
 from lxml import etree
-from datetime import date, timedelta, datetime
-import io
+from datetime import date, timedelta
 import os
 
 app = Flask(__name__)
@@ -143,16 +142,15 @@ def home():
         qtd_caixas = request.form["qtd_caixas"]
         modelo_caixas = request.form["modelo_caixas"]
 
-        # Chama SOAP interno
+        # Gera SOAP e extrai informações
         response_xml = gerar_laudo_soap(data_emissao)
         tree = etree.fromstring(response_xml)
         tns = "http://laudoservice.onrender.com/soap"
         numero_laudo = tree.find(f".//{{{tns}}}numero_laudo").text
         data_validade = tree.find(f".//{{{tns}}}data_validade").text
 
-        # Gera PDF
-        from weasyprint import HTML
-        html = render_template(
+        # Exibe diretamente o HTML do laudo
+        return render_template(
             "laudo.html",
             numero_laudo=numero_laudo,
             data_emissao=data_emissao,
@@ -162,10 +160,6 @@ def home():
             qtd_caixas=qtd_caixas,
             modelo_caixas=modelo_caixas,
         )
-        pdf = io.BytesIO()
-        HTML(string=html).write_pdf(pdf)
-        pdf.seek(0)
-        return send_file(pdf, download_name=f"Laudo_{numero_laudo}.pdf", as_attachment=True)
 
     return render_template("form.html")
 
