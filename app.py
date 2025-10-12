@@ -52,7 +52,6 @@ def gerar_laudo_soap(data_emissao_str):
     numero_formatado = f"017{numero:06d}"
     data_validade = data_emissao + timedelta(days=15)
 
-    # Dados fixos de exemplo
     cpf_cnpj_cliente = "59.508.117/0001-23"
     nome_cliente = "Organizações Salomão Martins Ltda"
     quantidade_caixas = 50
@@ -74,7 +73,6 @@ def gerar_laudo_soap(data_emissao_str):
     etree.SubElement(ResponseEl, "{%s}modelo_caixas" % NS_TNS).text = modelo_caixas
 
     return etree.tostring(Envelope, xml_declaration=True, encoding="utf-8")
-
 
 # -----------------------
 # Rotas SOAP
@@ -138,23 +136,33 @@ def wsdl():
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
+        # Dados do formulário
         data_emissao = request.form["data_emissao"]
         cpf_cnpj = request.form["cpf_cnpj"]
         nome_cliente = request.form["nome_cliente"]
-        qtd_caixas = request.form["qtd_caixas"]
-        modelo_caixas = request.form["modelo_caixas"]
+        endereco_cliente = request.form["endereco_cliente"]
+        bairro_cliente = request.form["bairro_cliente"]
+        uf_cliente = request.form["uf_cliente"]
+        cep_cliente = request.form["cep_cliente"]
+
         equipamento = request.form["equipamento"]
         produtos_utilizados = request.form["produtos_utilizados"]
         processo = request.form["processo"]
+        veiculo = request.form["veiculo"]
+        placa = request.form["placa"]
+        motorista = request.form["motorista"]
+        cpf_motorista = request.form["cpf_motorista"]
 
-        # Gera SOAP e extrai dados básicos
+        qtd_caixas = request.form["qtd_caixas"]
+        modelo_caixas = request.form["modelo_caixas"]
+
+        # Gera SOAP e extrai dados principais
         response_xml = gerar_laudo_soap(data_emissao)
         tree = etree.fromstring(response_xml)
         tns = "https://laudo-rneg.onrender.com/soap"
         numero_laudo = tree.find(f".//{{{tns}}}numero_laudo").text
         data_validade = tree.find(f".//{{{tns}}}data_validade").text
 
-        # Cria o código de barras
         barcode_path = gerar_barcode(numero_laudo)
 
         return render_template(
@@ -164,11 +172,19 @@ def home():
             data_validade=formatar_data(data_validade),
             cpf_cnpj=cpf_cnpj,
             nome_cliente=nome_cliente,
-            qtd_caixas=qtd_caixas,
-            modelo_caixas=modelo_caixas,
+            endereco_cliente=endereco_cliente,
+            bairro_cliente=bairro_cliente,
+            uf_cliente=uf_cliente,
+            cep_cliente=cep_cliente,
             equipamento=equipamento,
             produtos_utilizados=produtos_utilizados,
             processo=processo,
+            veiculo=veiculo,
+            placa=placa,
+            motorista=motorista,
+            cpf_motorista=cpf_motorista,
+            qtd_caixas=qtd_caixas,
+            modelo_caixas=modelo_caixas,
             barcode_path=barcode_path,
         )
 
