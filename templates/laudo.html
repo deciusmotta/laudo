@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Laudo Gerado</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    h1 { text-align: center; }
+    p { margin: 5px 0; }
+    .barcode { text-align: center; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <h1>Laudo Técnico</h1>
+  <p><strong>Equipamento:</strong> {{ data['equipamento'] }}</p>
+  <p><strong>Produtos Utilizados:</strong> {{ data['produtos_utilizados'] }}</p>
+  <p><strong>Processo:</strong> {{ data['processo'] }}</p>
+
+  <div class="barcode">
+    <p><br><br>Contagem, {{ data_hoje }}</p>
+    <img src="data:image/png;base64,iVBOR..." alt="Código de Barras" style="height:50px;">
+  </div>
+</body>
+</html>
