@@ -1,117 +1,97 @@
-from flask import Flask, request, Response
-from spyne import Application, rpc, ServiceBase, Unicode, Integer, Date, ComplexModel
-from spyne.protocol.soap import Soap11
-from spyne.server.wsgi import WsgiApplication
-from io import BytesIO
-import logging
-import os
-from datetime import timedelta
 
-logging.basicConfig(level=logging.INFO)
+import os, base64, json, datetime, requests
+from flask import Flask, render_template, request, Response, flash
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("FLASK_SECRET", "replace-me")
 
-# --- Arquivo para armazenar o último número de laudo ---
-ULTIMO_LAUDO_FILE = "ultimo_laudo.txt"
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+GITHUB_REPO = os.environ.get("GITHUB_REPO")
+GITHUB_FILE = os.environ.get("GITHUB_FILE", "laudos.json")
+GITHUB_API = "https://api.github.com"
 
-def get_next_laudo_number():
-    """Gera número sequencial do laudo"""
-    if not os.path.exists(ULTIMO_LAUDO_FILE):
-        with open(ULTIMO_LAUDO_FILE, "w") as f:
-            f.write("0")
+HEADERS = {"Accept": "application/vnd.github+json"}
+if GITHUB_TOKEN:
+    HEADERS["Authorization"] = f"token {GITHUB_TOKEN}"
 
-    with open(ULTIMO_LAUDO_FILE, "r") as f:
-        last = int(f.read().strip() or "0")
+def get_remote_json():
+    if not GITHUB_REPO:
+        return {"last_number": 0}
+    owner_repo = GITHUB_REPO.strip()
+    raw_url = f"https://raw.githubusercontent.com/{owner_repo}/main/{GITHUB_FILE}"
+    try:
+        r = requests.get(raw_url, timeout=10)
+        if r.status_code == 200:
+            return r.json()
+        else:
+            return {"last_number": 0}
+    except Exception:
+        return {"last_number": 0}
 
-    next_num = last + 1
+def get_file_sha():
+    if not GITHUB_REPO:
+        return None
+    url = f"{GITHUB_API}/repos/{GITHUB_REPO}/contents/{GITHUB_FILE}"
+    r = requests.get(url, headers=HEADERS, timeout=10)
+    if r.status_code == 200:
+        data = r.json()
+        return data.get("sha")
+    return None
 
-    with open(ULTIMO_LAUDO_FILE, "w") as f:
-        f.write(str(next_num))
+def update_remote_json(new_json, message="Update laudos.json via web app"):
+    if not GITHUB_REPO or not GITHUB_TOKEN:
+        return False, "Missing GITHUB_REPO or GITHUB_TOKEN"
+    url = f"{GITHUB_API}/repos/{GITHUB_REPO}/contents/{GITHUB_FILE}"
+    sha = get_file_sha()
+    content_b64 = base64.b64encode(json.dumps(new_json, ensure_ascii=False, indent=2).encode("utf-8")).decode("utf-8")
+    payload = {"message": message, "content": content_b64, "branch": "main"}
+    if sha:
+        payload["sha"] = sha
+    r = requests.put(url, headers=HEADERS, json=payload, timeout=10)
+    if r.status_code in (200, 201):
+        return True, r.json()
+    else:
+        return False, f"GitHub API error {r.status_code}: {r.text}"
 
-    return next_num
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        client = request.form.get("client", "").strip()
+        sample = request.form.get("sample", "").strip()
+        observations = request.form.get("observations", "").strip()
+        responsible = request.form.get("responsible", "").strip()
 
+        data = get_remote_json()
+        last = int(data.get("last_number", 0))
+        new_number = last + 1
+        data["last_number"] = new_number
 
-# --- Modelo de resposta ---
-class LaudoResponse(ComplexModel):
-    numero_laudo = Unicode
-    data_emissao = Date
-    data_validade = Date
-    cpf_cnpj_cliente = Unicode
-    nome_cliente = Unicode
-    quantidade_caixas = Integer
-    modelo_caixas = Unicode
+        ok, resp = update_remote_json(data, message=f"Increment laudo number to {new_number}")
+        if not ok:
+            flash("Aviso: não foi possível atualizar contador no GitHub: " + str(resp), "warning")
 
+        fixed_text = ("Atestamos para os devidos fins que o processo de Higienização de Caixas Plásticas utilizado pela empresa "
+                      "Organizações Salomão Martins Ltda, portadora do CNPJ 59.508.117/0001-23, CREA MG 241837, "
+                      "Registro IMA Nº 19.336, localizada à Rod. BR-040, 383 – Galpão 01, Bairro Vila Paris, Contagem, Minas Gerais, "
+                      "no CEP 32.150-340; é realizado de acordo com as normas e padrões necessários.")
 
-# --- Serviço SOAP ---
-class LaudoService(ServiceBase):
-    @rpc(Date, _returns=LaudoResponse)
-    def gerar_laudo(ctx, data_emissao):
-        """
-        Gera um laudo com base na Data de Emissão informada no Request.
-        A Data de Validade será automaticamente 15 dias após a emissão.
-        """
-        numero = get_next_laudo_number()
-        numero_formatado = f"017{numero:06d}"
+        rendered = render_template("laudo_template.html",
+                                   laudo_number=new_number,
+                                   client=client,
+                                   sample=sample,
+                                   observations=observations,
+                                   responsible=responsible,
+                                   fixed_text=fixed_text,
+                                   date=datetime.date.today().isoformat())
 
-        # Calcula validade
-        data_validade = data_emissao + timedelta(days=15)
+        return Response(rendered, mimetype="text/html")
 
-        # Exemplo de dados fixos
-        cpf_cnpj_cliente = "59.508.117/0001-23"
-        nome_cliente = "Organizações Salomão Martins Ltda"
-        quantidade_caixas = 50
-        modelo_caixas = "Modelo X"
+    return render_template("index.html")
 
-        return LaudoResponse(
-            numero_laudo=numero_formatado,
-            data_emissao=data_emissao,
-            data_validade=data_validade,
-            cpf_cnpj_cliente=cpf_cnpj_cliente,
-            nome_cliente=nome_cliente,
-            quantidade_caixas=quantidade_caixas,
-            modelo_caixas=modelo_caixas
-        )
-
-
-# --- Configuração SOAP ---
-soap_app = Application(
-    [LaudoService],
-    tns='http://laudoservice.onrender.com/soap',
-    name='LaudoService',
-    in_protocol=Soap11(validator='lxml'),
-    out_protocol=Soap11()
-)
-
-wsgi_app = WsgiApplication(soap_app)
-
-
-# --- Endpoint SOAP ---
-@app.route("/soap", methods=['GET', 'POST'])
-def soap_server():
-    buf = BytesIO()
-
-    def start_response(status, headers):
-        buf.status = status
-        buf.headers = headers
-        return buf.write
-
-    result = wsgi_app(request.environ, start_response)
-    response_data = b"".join(result)
-    return Response(response_data, mimetype="text/xml; charset=utf-8")
-
-
-# --- Endpoint WSDL ---
-@app.route("/soap?wsdl", methods=["GET"])
-def wsdl():
-    wsdl_content = soap_app.get_interface_document('wsdl')
-    return Response(wsdl_content, mimetype='text/xml')
-
-
-# --- Página inicial ---
-@app.route("/")
-def home():
-    return "LaudoService SOAP ativo em /soap e WSDL em /soap?wsdl"
-
+@app.route("/status")
+def status():
+    data = get_remote_json()
+    return {"last_number": data.get("last_number", 0)}
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
