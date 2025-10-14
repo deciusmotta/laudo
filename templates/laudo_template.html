@@ -1,51 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="laudo">
-  <div class="header">
-    <img src="{{ url_for('static', filename='img/logo_master.png') }}" class="logo" alt="Logo">
-    <h1>ATESTADO DE HIGIENIZAÇÃO DE CAIXAS PLÁSTICAS</h1>
-    <div class="sub">Conforme Norma ABNT NBR 15674</div>
-  </div>
-
-  <div class="meta">
-    <div class="right"><strong>Nº {{ dados.numero_laudo }}</strong></div>
-    <div class="left">Contagem, {{ dados.data_geracao }}</div>
-  </div>
-
-  <div class="content">
-    <p>Atestamos para os devidos fins que o processo de Higienização de Caixas Plásticas utilizado pela empresa <strong>Organizações Salomão Martins Ltda</strong>, portadora do CNPJ 59.508.117/0001-23, CREA MG 241837, Registro IMA Nº 19.336, localizada à Rod. BR-040, 383 – Galpão 01, Bairro Vila Paris, Contagem, Minas Gerais, no CEP 32.150-340; é realizado de acordo com as normas e padrões necessários.</p>
-
-    <h3>Dados</h3>
-    <table class="info">
-      <tr><td>Equipamento</td><td>{{ dados.equipamento }}</td></tr>
-      <tr><td>Produtos utilizados</td><td>{{ dados.produtos_utilizados|nl2br }}</td></tr>
-      <tr><td>Processo</td><td>{{ dados.processo|nl2br }}</td></tr>
-      <tr><td>Nome do Cliente</td><td>{{ dados.nome_cliente }}</td></tr>
-      <tr><td>CPF/CNPJ</td><td>{{ dados.cpf_cnpj }}</td></tr>
-      <tr><td>Endereço</td><td>{{ dados.endereco }}</td></tr>
-      <tr><td>Bairro</td><td>{{ dados.bairro }}</td></tr>
-      <tr><td>UF</td><td>{{ dados.uf }}</td></tr>
-      <tr><td>CEP</td><td>{{ dados.cep }}</td></tr>
-      <tr><td>Veículo Transportador</td><td>{{ dados.veiculo }}</td></tr>
-      <tr><td>Marca</td><td>{{ dados.marca }}</td></tr>
-      <tr><td>Placa/UF</td><td>{{ dados.placa }}</td></tr>
-      <tr><td>Nome do Motorista</td><td>{{ dados.motorista }}</td></tr>
-      <tr><td>CPF/ID</td><td>{{ dados.cpf_motorista }}</td></tr>
-      <tr><td>Total de Caixas Higienizadas</td><td>{{ dados.total_caixas }}</td></tr>
-      <tr><td>Modelo de Caixa</td><td>{{ dados.modelo_caixa }}</td></tr>
-    </table>
-
-    <p class="norma">As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento a IN Conjunta 009/2002 SARCxANVISAxINMETRO.</p>
-
-    <p class="validade">O Atestado de Higienização de Caixas Plásticas Vazias é válido para o trânsito até {{ dados.data_geracao }}.</p>
-    <p class="ceasa">Validade para entrada no CEASA: {{ dados.data_validade }}</p>
-
-    <div class="auth">
-      <p>Confira a autenticidade desse laudo através do código de barras impresso abaixo, integrado ao nosso WebService.</p>
-      <p><br></p>
-      <p>Contagem, {{ dados.data_geracao }}</p>
-      <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras" class="barcode">
-    </div>
-  </div>
+<h2 style="text-align:center;">Laudo Nº {{ dados.numero_laudo }}</h2>
+<p style="text-align:center;">Contagem, {{ dados.data_geracao }}</p>
+<hr>
+<p><strong>Equipamento:</strong> {{ dados.equipamento }}</p>
+<p><strong>Produtos Utilizados:</strong><br>{{ dados.produtos_utilizados|nl2br }}</p>
+<p><strong>Processo:</strong><br>{{ dados.processo|nl2br }}</p>
+<p><strong>Nome do Cliente:</strong> {{ dados.nome_cliente }}</p>
+<p><strong>CPF/CNPJ:</strong> {{ dados.cpf_cnpj }}</p>
+<p><strong>Endereço:</strong> {{ dados.endereco }}</p>
+<p><strong>Bairro:</strong> {{ dados.bairro }}</p>
+<p><strong>UF:</strong> {{ dados.uf }}</p>
+<p><strong>CEP:</strong> {{ dados.cep }}</p>
+<p><strong>Veículo:</strong> {{ dados.veiculo }}</p>
+<p><strong>Marca:</strong> {{ dados.marca }}</p>
+<p><strong>Placa/UF:</strong> {{ dados.placa }}</p>
+<p><strong>Motorista:</strong> {{ dados.motorista }}</p>
+<p><strong>CPF/ID:</strong> {{ dados.cpf_motorista }}</p>
+<p><strong>Total de Caixas Higienizadas:</strong> {{ dados.total_caixas }}</p>
+<p><strong>Modelo de Caixa:</strong> {{ dados.modelo_caixa }}</p>
+<p>Validade: {{ dados.data_validade }}</p>
+<hr>
+<div style="text-align:center;">
+  <p>Confira a autenticidade através do código de barras abaixo.</p>
+  <img src="data:image/png;base64,{{ dados.barcode }}" style="height:35px;">
 </div>
 {% endblock %}

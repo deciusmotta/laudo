@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, flash
+from flask import Flask, render_template, request, send_file
 import os, io, json, base64, datetime, requests
 from weasyprint import HTML
 from barcode import Code128
@@ -6,6 +6,11 @@ from barcode.writer import ImageWriter
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET", "replace-me")
+
+@app.template_filter('nl2br')
+def nl2br(value):
+    """Converte quebras de linha em <br>."""
+    return value.replace('\n', '<br>') if value else ''
 
 GITHUB_REPO = os.environ.get("GITHUB_REPO", "deciusmotta/laudo")
 GITHUB_FILE = os.environ.get("GITHUB_FILE", "laudos.json")
@@ -26,7 +31,6 @@ def update_remote_json(new_json, message="Atualiza contador de laudos"):
     if not GITHUB_TOKEN:
         return False, "Missing token"
     url = f"{GITHUB_API}/repos/{GITHUB_REPO}/contents/{GITHUB_FILE}"
-    # get sha if exists
     r = requests.get(url, headers={"Authorization": f"token {GITHUB_TOKEN}"}, timeout=10)
     sha = r.json().get("sha") if r.status_code == 200 else None
     content_b64 = base64.b64encode(json.dumps(new_json, ensure_ascii=False, indent=2).encode("utf-8")).decode("utf-8")
@@ -40,10 +44,7 @@ def get_next_number():
     data = get_remote_json()
     last = int(data.get("ultimo_numero", 0))
     new = last + 1
-    ok, resp = update_remote_json({"ultimo_numero": new}, message=f"Incrementa laudo {new}")
-    if not ok:
-        # still return new number locally if update failed
-        return new
+    update_remote_json({"ultimo_numero": new}, message=f"Incrementa laudo {new}")
     return new
 
 @app.route("/", methods=["GET","POST"])
@@ -59,7 +60,6 @@ def index():
             "data_validade": validade.strftime("%d/%m/%Y"),
             **form
         }
-        # generate barcode base64 (small height)
         buffer = io.BytesIO()
         Code128(str(numero), writer=ImageWriter()).write(buffer, {"module_height": 8.0, "font_size": 0, "text_distance": 0})
         dados["barcode"] = base64.b64encode(buffer.getvalue()).decode("utf-8")
@@ -68,21 +68,17 @@ def index():
 
 @app.route("/pdf", methods=["POST"])
 def gerar_pdf():
-    # Render same HTML used for preview and convert to PDF (prevents duplication)
     dados = request.form.to_dict()
-    # ensure date fields
     if "data_geracao" not in dados:
         hoje = datetime.date.today()
         validade = hoje + datetime.timedelta(days=15)
         dados["data_geracao"] = hoje.strftime("%d/%m/%Y")
         dados["data_validade"] = validade.strftime("%d/%m/%Y")
     if "barcode" not in dados or not dados.get("barcode"):
-        # regenerate barcode
         buffer = io.BytesIO()
         Code128(str(dados.get("numero_laudo","")), writer=ImageWriter()).write(buffer, {"module_height": 8.0, "font_size": 0, "text_distance": 0})
         dados["barcode"] = base64.b64encode(buffer.getvalue()).decode("utf-8")
     html = render_template("laudo_template.html", dados=dados)
-    # WeasyPrint render: ensure same HTML => no duplicated content
     pdf = HTML(string=html).write_pdf()
     return send_file(io.BytesIO(pdf), mimetype="application/pdf", as_attachment=True, download_name=f"Laudo_{dados.get('numero_laudo','0')}.pdf")
 
