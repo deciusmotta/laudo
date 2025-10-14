@@ -30,17 +30,20 @@ def get_next_laudo():
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        dados = request.form.to_dict()
+        dados = request.form.to_dict()  # captura todos os campos do formulário
         numero_laudo = get_next_laudo()
-        hoje = datetime.date.today()
-        validade = hoje + datetime.timedelta(days=15)
+
+        # Data de emissão e validade
         data_emissao = datetime.now()
-        validade = (data_emissao + timedelta(days=15)).strftime('%d/%m/%Y')
+        validade = data_emissao + timedelta(days=15)
         data_emissao_str = data_emissao.strftime('%d/%m/%Y')
+        validade_str = validade.strftime('%d/%m/%Y')
+
+        # Atualizar dados do laudo
         dados.update({
             "numero_laudo": numero_laudo,
-            "data_geracao": hoje.strftime("%d/%m/%Y"),
-            "data_validade": validade.strftime("%d/%m/%Y")
+            "data_geracao": data_emissao_str,
+            "data_validade": validade_str
         })
         # Código de barras menor
         buffer = io.BytesIO()
