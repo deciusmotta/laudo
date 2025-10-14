@@ -18,8 +18,8 @@
   </table>
 
   <p>As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento a IN Conjunta 009/2002 SARCxANVISAxINMETRO.</p><br>
-  <p></p><strong>Validade desse Atestado:</strong> {{ validade }}</p><br>
-  <p><strong>Contagem,</strong> {{ data_emissao }}</p><br>
+  <p></p><strong>Validade desse Atestado:</strong> {{ dados.data_validade }}</p><br>
+  <p><strong>Contagem,</strong> {{ dados.data_geracao }}</p><br>
 
   <p>Confira a autenticidade desse laudo através do código de barras abaixo:</p>
   <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras" style="display:block; margin:10px auto;">
