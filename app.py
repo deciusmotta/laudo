@@ -38,8 +38,9 @@ def index():
             "data_geracao": hoje.strftime("%d/%m/%Y"),
             "data_validade": validade.strftime("%d/%m/%Y")
         })
+        # Código de barras menor
         buffer = io.BytesIO()
-        Code128(str(numero_laudo), writer=ImageWriter()).write(buffer, {"module_height": 15.0, "font_size": 10, "text_distance": 1})
+        Code128(str(numero_laudo), writer=ImageWriter()).write(buffer, {"module_height": 8.0, "font_size": 0, "text_distance": 0})
         dados["barcode"] = base64.b64encode(buffer.getvalue()).decode()
         return render_template("laudo_template.html", dados=dados)
     return render_template("index.html")

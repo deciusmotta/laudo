@@ -1,31 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="laudo">
+<div class="laudo" style="max-width:800px; margin:auto; padding:20px; border:1px solid #ccc; border-radius:8px; font-size:14px;">
   <p style="text-align:right;"><b>Nº {{ dados.numero_laudo }}</b></p>
   <p>O Atestado de Higienização de Caixas Plásticas Vazias é válido para o trânsito até {{ dados.data_geracao }}</p>
   <p>Validade para entrada no CEASA: {{ dados.data_validade }}</p>
+
   <h3>Dados do Laudo</h3>
-  <ul>
-    <li><strong>Equipamento:</strong> {{ dados.equipamento }}</li>
-    <li><strong>Produtos Utilizados:</strong> {{ dados.produtos_utilizados }}</li>
-    <li><strong>Processo:</strong> {{ dados.processo }}</li>
-    <li><strong>Nome do Cliente:</strong> {{ dados.nome_cliente }}</li>
-    <li><strong>CPF/CNPJ:</strong> {{ dados.cpf_cnpj }}</li>
-    <li><strong>Endereço:</strong> {{ dados.endereco }}</li>
-    <li><strong>Bairro:</strong> {{ dados.bairro }}</li>
-    <li><strong>UF:</strong> {{ dados.uf }}</li>
-    <li><strong>CEP:</strong> {{ dados.cep }}</li>
-    <li><strong>Veículo Transportador:</strong> {{ dados.veiculo }}</li>
-    <li><strong>Marca:</strong> {{ dados.marca }}</li>
-    <li><strong>Placa/UF:</strong> {{ dados.placa }}</li>
-    <li><strong>Nome do Motorista:</strong> {{ dados.motorista }}</li>
-    <li><strong>CPF/ID:</strong> {{ dados.cpf_motorista }}</li>
-    <li><strong>Total de Caixas Higienizadas:</strong> {{ dados.total_caixas }}</li>
-    <li><strong>Modelo de Caixa:</strong> {{ dados.modelo_caixa }}</li>
-  </ul>
+  <table style="width:100%; border-collapse: collapse;">
+    {% for label, value in dados.items() %}
+      {% if label not in ["numero_laudo","barcode","data_geracao","data_validade"] %}
+      <tr>
+        <td style="border:1px solid #ccc; padding:4px; font-weight:bold;">{{ label.replace('_',' ').title() }}</td>
+        <td style="border:1px solid #ccc; padding:4px;">{{ value }}</td>
+      </tr>
+      {% endif %}
+    {% endfor %}
+  </table>
+
   <p>As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento a IN Conjunta 009/2002 SARCxANVISAxINMETRO.</p>
   <p>Confira a autenticidade desse laudo através do código de barras abaixo:</p>
-  <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras">
+  <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras" style="display:block; margin:10px auto;">
+
   <form action="{{ url_for('gerar_pdf') }}" method="post" target="_blank">
     {% for k, v in dados.items() %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
     <button type="submit">Baixar PDF</button>
