@@ -12,8 +12,8 @@ GITHUB_REPO = "deciusmotta/laudo"
 GITHUB_FILE = "laudos.json"
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
-# Arquivo local para gravar os laudos gerados
-LAUDOS_FILE = "laudos_gerados.json"
+# Arquivo local para gravar os laudos gerados (caminho absoluto)
+LAUDOS_FILE = os.path.join(os.path.dirname(__file__), "laudos_gerados.json")
 
 # Função para obter próximo número de laudo via GitHub
 def get_next_laudo():
@@ -40,25 +40,31 @@ def get_next_laudo():
 # Função para salvar laudo em arquivo JSON local
 def salvar_laudo(dados):
     laudo_registro = {
-        "numero_laudo": str(dados.get("numero_laudo")),
-        "data_emissao": dados.get("data_geracao"),
-        "data_validade": dados.get("data_validade"),
-        "cpf_cnpj_cliente": dados.get("cpf_cnpj_cliente"),
-        "nome_cliente": dados.get("nome_cliente"),
-        "quantidade_caixas": dados.get("quantidade_caixas"),
-        "modelo_caixas": dados.get("modelo_caixas")
+        "numero_laudo": str(dados.get("numero_laudo", "")),
+        "data_emissao": dados.get("data_geracao", ""),
+        "data_validade": dados.get("data_validade", ""),
+        "cpf_cnpj_cliente": dados.get("cpf_cnpj_cliente", ""),
+        "nome_cliente": dados.get("nome_cliente", ""),
+        "quantidade_caixas": dados.get("quantidade_caixas", ""),
+        "modelo_caixas": dados.get("modelo_caixas", "")
     }
 
-    if os.path.exists(LAUDOS_FILE):
-        with open(LAUDOS_FILE, "r", encoding="utf-8") as f:
-            todos_laudos = json.load(f)
-    else:
-        todos_laudos = []
+    try:
+        if os.path.exists(LAUDOS_FILE):
+            with open(LAUDOS_FILE, "r", encoding="utf-8") as f:
+                todos_laudos = json.load(f)
+        else:
+            todos_laudos = []
 
-    todos_laudos.append(laudo_registro)
+        todos_laudos.append(laudo_registro)
 
-    with open(LAUDOS_FILE, "w", encoding="utf-8") as f:
-        json.dump(todos_laudos, f, ensure_ascii=False, indent=4)
+        with open(LAUDOS_FILE, "w", encoding="utf-8") as f:
+            json.dump(todos_laudos, f, ensure_ascii=False, indent=4)
+
+        print(f"Laudo {laudo_registro['numero_laudo']} salvo com sucesso!")
+
+    except Exception as e:
+        print(f"Erro ao salvar laudo: {e}")
 
 # Rota principal - formulário e geração do laudo HTML
 @app.route("/", methods=["GET", "POST"])
@@ -80,7 +86,7 @@ def index():
             "data_validade": validade_str
         })
 
-        # Código de barras
+        # Gerar código de barras
         buffer = io.BytesIO()
         Code128(
             str(numero_laudo),
@@ -113,7 +119,7 @@ def listar_laudos():
     else:
         todos_laudos = []
 
-    return {"laudos": todos_laudos}  # JSON que pode ser usado posteriormente em SOAP
+    return {"laudos": todos_laudos}
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
