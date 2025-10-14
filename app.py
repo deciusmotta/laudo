@@ -9,35 +9,46 @@ app = Flask(__name__)
 
 # Configurações GitHub
 GITHUB_REPO = "deciusmotta/laudo"
-GITHUB_FILE = "laudos.json"
+GITHUB_FILE_NUMERACAO = "laudos.json"             # controle do número sequencial
+GITHUB_FILE_GERADOS = "laudos_gerados.json"       # armazena os laudos completos
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
 # Arquivo local persistente no Render
 LOCAL_LAUDOS_FILE = "/mnt/data/laudos_gerados.json"
 
-# Função para obter próximo número de laudo via GitHub
+
+# =====================================================
+# Função: Obter o próximo número de laudo (via GitHub)
+# =====================================================
 def get_next_laudo():
     headers = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
-    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE}"
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_NUMERACAO}"
+
     r = requests.get(url, headers=headers)
     if r.status_code == 200:
         content = json.loads(base64.b64decode(r.json()["content"]).decode())
         numero = content.get("ultimo_numero", 0) + 1
     else:
         numero = 1
+
     content = {"ultimo_numero": numero}
     encoded = base64.b64encode(json.dumps(content).encode()).decode()
+
     if GITHUB_TOKEN:
         data = {
-            "message": f"Atualiza laudo {numero}",
+            "message": f"Atualiza número do laudo {numero}",
             "content": encoded,
             "branch": "main",
             "sha": r.json().get("sha") if r.status_code == 200 else None
         }
         requests.put(url, headers=headers, json=data)
+
     return numero
 
-# Função híbrida: salva localmente e atualiza no GitHub
+
+# =====================================================
+# Função: Salvar o laudo (local + GitHub)
+# =====================================================
 def salvar_laudo(dados):
     laudo_registro = {
         "numero_laudo": str(dados.get("numero_laudo", "")),
@@ -63,26 +74,37 @@ def salvar_laudo(dados):
             json.dump(todos_laudos, f, ensure_ascii=False, indent=4)
 
         print(f"[LOCAL] Laudo {laudo_registro['numero_laudo']} salvo com sucesso!")
-
     except Exception as e:
         print(f"[LOCAL] Erro ao salvar laudo: {e}")
 
     # --- 2. Atualizar no GitHub ---
     if GITHUB_TOKEN:
-        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE}"
+        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_GERADOS}"
         headers = {
             "Authorization": f"token {GITHUB_TOKEN}",
             "Accept": "application/vnd.github+json"
         }
 
-        # Obter SHA atual
+        # Buscar SHA do arquivo atual (se existir)
         r = requests.get(url, headers=headers)
-        sha = r.json().get("sha") if r.status_code == 200 else None
+        if r.status_code == 200:
+            sha = r.json().get("sha")
+            try:
+                conteudo_atual = json.loads(base64.b64decode(r.json()["content"]).decode())
+            except:
+                conteudo_atual = []
+        else:
+            sha = None
+            conteudo_atual = []
 
-        # Codificar conteúdo
-        content_encoded = base64.b64encode(json.dumps(todos_laudos, ensure_ascii=False, indent=4).encode()).decode()
+        conteudo_atual.append(laudo_registro)
+
+        content_encoded = base64.b64encode(
+            json.dumps(conteudo_atual, ensure_ascii=False, indent=4).encode()
+        ).decode()
+
         data = {
-            "message": f"Atualiza laudo {laudo_registro['numero_laudo']}",
+            "message": f"Adiciona laudo {laudo_registro['numero_laudo']}",
             "content": content_encoded,
             "branch": "main"
         }
@@ -91,11 +113,14 @@ def salvar_laudo(dados):
 
         r_put = requests.put(url, headers=headers, json=data)
         if r_put.status_code in [200, 201]:
-            print(f"[GITHUB] Laudo {laudo_registro['numero_laudo']} atualizado no GitHub com sucesso!")
+            print(f"[GITHUB] Laudo {laudo_registro['numero_laudo']} enviado ao GitHub com sucesso!")
         else:
-            print(f"[GITHUB] Falha ao atualizar laudo no GitHub: {r_put.status_code} - {r_put.text}")
+            print(f"[GITHUB] Erro ao atualizar GitHub ({r_put.status_code}): {r_put.text}")
 
+
+# =====================================================
 # Rota principal
+# =====================================================
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
@@ -108,7 +133,6 @@ def index():
         data_emissao_str = data_emissao.strftime('%d/%m/%Y')
         validade_str = validade.strftime('%d/%m/%Y')
 
-        # Atualiza dados
         dados.update({
             "numero_laudo": numero_laudo,
             "data_geracao": data_emissao_str,
@@ -117,29 +141,38 @@ def index():
 
         # Código de barras
         buffer = io.BytesIO()
-        Code128(
-            str(numero_laudo),
-            writer=ImageWriter()
-        ).write(buffer, {"module_height": 8.0, "font_size": 0, "text_distance": 0})
-        buffer.seek(0)
+        Code128(str(numero_laudo), writer=ImageWriter()).write(
+            buffer, {"module_height": 8.0, "font_size": 0, "text_distance": 0}
+        )
         dados["barcode"] = base64.b64encode(buffer.getvalue()).decode()
 
-        # Salvar local e no GitHub
+        # Salvar local + GitHub
         salvar_laudo(dados)
 
         return render_template("laudo_template.html", dados=dados)
 
     return render_template("index.html")
 
+
+# =====================================================
 # Gerar PDF
+# =====================================================
 @app.route("/pdf", methods=["POST"])
 def gerar_pdf():
     dados = request.form.to_dict()
     html = render_template("laudo_template.html", dados=dados)
     pdf = HTML(string=html).write_pdf()
-    return send_file(io.BytesIO(pdf), mimetype="application/pdf", as_attachment=True, download_name="laudo.pdf")
+    return send_file(
+        io.BytesIO(pdf),
+        mimetype="application/pdf",
+        as_attachment=True,
+        download_name="laudo.pdf"
+    )
 
-# Consultar todos os laudos
+
+# =====================================================
+# Endpoint para consulta dos laudos (JSON)
+# =====================================================
 @app.route("/api/laudos", methods=["GET"])
 def listar_laudos():
     if os.path.exists(LOCAL_LAUDOS_FILE):
@@ -150,5 +183,9 @@ def listar_laudos():
 
     return {"laudos": todos_laudos}
 
+
+# =====================================================
+# Execução
+# =====================================================
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
