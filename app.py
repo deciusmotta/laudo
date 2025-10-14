@@ -3,6 +3,7 @@ import io, json, requests, datetime, base64, os
 from weasyprint import HTML
 from barcode import Code128
 from barcode.writer import ImageWriter
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -33,6 +34,9 @@ def index():
         numero_laudo = get_next_laudo()
         hoje = datetime.date.today()
         validade = hoje + datetime.timedelta(days=15)
+        data_emissao = datetime.now()
+        validade = (data_emissao + timedelta(days=15)).strftime('%d/%m/%Y')
+        data_emissao_str = data_emissao.strftime('%d/%m/%Y')
         dados.update({
             "numero_laudo": numero_laudo,
             "data_geracao": hoje.strftime("%d/%m/%Y"),
