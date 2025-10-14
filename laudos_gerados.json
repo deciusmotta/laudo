@@ -7,5 +7,14 @@
         "nome_cliente": "dgdfg",
         "quantidade_caixas": "",
         "modelo_caixas": ""
+    },
+    {
+        "numero_laudo": "12",
+        "data_emissao": "14/10/2025",
+        "data_validade": "29/10/2025",
+        "cpf_cnpj_cliente": "",
+        "nome_cliente": "dgdfgd",
+        "quantidade_caixas": "",
+        "modelo_caixas": ""
     }
 ]
