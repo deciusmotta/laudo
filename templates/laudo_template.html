@@ -1,29 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="laudo" style="max-width:800px; margin:auto; padding:20px; border:1px solid #ccc; border-radius:8px; font-size:14px;">
-  <p style="text-align:right;"><b>Nº {{ dados.numero_laudo }}</b></p>
-  <p>O Atestado de Higienização de Caixas Plásticas Vazias é válido para o trânsito até {{ dados.data_geracao }}</p>
-  <p>Validade para entrada no CEASA: {{ dados.data_validade }}</p>
+<div class="laudo">
+  <div class="header">
+    <img src="{{ url_for('static', filename='img/logo_master.png') }}" class="logo" alt="Logo">
+    <h1>ATESTADO DE HIGIENIZAÇÃO DE CAIXAS PLÁSTICAS</h1>
+    <div class="sub">Conforme Norma ABNT NBR 15674</div>
+  </div>
 
-  <h3>Dados do Laudo</h3>
-  <table style="width:100%; border-collapse: collapse;">
-    {% for label, value in dados.items() %}
-      {% if label not in ["numero_laudo","barcode","data_geracao","data_validade"] %}
-      <tr>
-        <td style="border:1px solid #ccc; padding:4px; font-weight:bold;">{{ label.replace('_',' ').title() }}</td>
-        <td style="border:1px solid #ccc; padding:4px;">{{ value }}</td>
-      </tr>
-      {% endif %}
-    {% endfor %}
-  </table>
+  <div class="meta">
+    <div class="right"><strong>Nº {{ dados.numero_laudo }}</strong></div>
+    <div class="left">Contagem, {{ dados.data_geracao }}</div>
+  </div>
 
-  <p>As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento a IN Conjunta 009/2002 SARCxANVISAxINMETRO.</p>
-  <p>Confira a autenticidade desse laudo através do código de barras abaixo:</p>
-  <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras" style="display:block; margin:10px auto;">
+  <div class="content">
+    <p>Atestamos para os devidos fins que o processo de Higienização de Caixas Plásticas utilizado pela empresa <strong>Organizações Salomão Martins Ltda</strong>, portadora do CNPJ 59.508.117/0001-23, CREA MG 241837, Registro IMA Nº 19.336, localizada à Rod. BR-040, 383 – Galpão 01, Bairro Vila Paris, Contagem, Minas Gerais, no CEP 32.150-340; é realizado de acordo com as normas e padrões necessários.</p>
 
-  <form action="{{ url_for('gerar_pdf') }}" method="post" target="_blank">
-    {% for k, v in dados.items() %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
-    <button type="submit">Baixar PDF</button>
-  </form>
+    <h3>Dados</h3>
+    <table class="info">
+      <tr><td>Equipamento</td><td>{{ dados.equipamento }}</td></tr>
+      <tr><td>Produtos utilizados</td><td>{{ dados.produtos_utilizados|nl2br }}</td></tr>
+      <tr><td>Processo</td><td>{{ dados.processo|nl2br }}</td></tr>
+      <tr><td>Nome do Cliente</td><td>{{ dados.nome_cliente }}</td></tr>
+      <tr><td>CPF/CNPJ</td><td>{{ dados.cpf_cnpj }}</td></tr>
+      <tr><td>Endereço</td><td>{{ dados.endereco }}</td></tr>
+      <tr><td>Bairro</td><td>{{ dados.bairro }}</td></tr>
+      <tr><td>UF</td><td>{{ dados.uf }}</td></tr>
+      <tr><td>CEP</td><td>{{ dados.cep }}</td></tr>
+      <tr><td>Veículo Transportador</td><td>{{ dados.veiculo }}</td></tr>
+      <tr><td>Marca</td><td>{{ dados.marca }}</td></tr>
+      <tr><td>Placa/UF</td><td>{{ dados.placa }}</td></tr>
+      <tr><td>Nome do Motorista</td><td>{{ dados.motorista }}</td></tr>
+      <tr><td>CPF/ID</td><td>{{ dados.cpf_motorista }}</td></tr>
+      <tr><td>Total de Caixas Higienizadas</td><td>{{ dados.total_caixas }}</td></tr>
+      <tr><td>Modelo de Caixa</td><td>{{ dados.modelo_caixa }}</td></tr>
+    </table>
+
+    <p class="norma">As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento a IN Conjunta 009/2002 SARCxANVISAxINMETRO.</p>
+
+    <p class="validade">O Atestado de Higienização de Caixas Plásticas Vazias é válido para o trânsito até {{ dados.data_geracao }}.</p>
+    <p class="ceasa">Validade para entrada no CEASA: {{ dados.data_validade }}</p>
+
+    <div class="auth">
+      <p>Confira a autenticidade desse laudo através do código de barras impresso abaixo, integrado ao nosso WebService.</p>
+      <p><br></p>
+      <p>Contagem, {{ dados.data_geracao }}</p>
+      <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras" class="barcode">
+    </div>
+  </div>
 </div>
 {% endblock %}

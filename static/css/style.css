@@ -1,12 +1,18 @@
-body { font-family: Arial, sans-serif; margin: 20px; color: #222; background:#f5f5f5; }
-header { text-align: center; margin-bottom: 30px; }
-.logo { width: 200px; }
-h1 { font-size: 22px; color: #003366; margin: 5px 0; }
-h2 { font-size: 18px; color: #003366; }
-h3 { border-bottom: 2px solid #003366; padding-bottom: 5px; margin-top:20px;}
-label { display: block; margin-top: 10px; font-weight: bold; }
-input { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px; }
-button { margin-top: 15px; padding: 10px 20px; background-color: #003366; color: white; border: none; border-radius: 4px; cursor: pointer; }
-button:hover { background-color: #0055aa; }
-table { margin-top:10px; }
-table td { font-size: 13px; }
+body { font-family: Arial, sans-serif; background:#f5f5f5; color:#222; }
+.container { max-width: 900px; margin: 20px auto; padding: 20px; }
+.header { text-align:center; }
+.logo { width:140px; display:block; margin:0 auto 8px; }
+h1 { margin:0; font-size:18px; letter-spacing:0.6px; }
+.meta { display:flex; justify-content:space-between; margin-top:12px; align-items:center;}
+.content { background:#fff; padding:16px; border-radius:8px; margin-top:12px; }
+/* table */
+table.info { width:100%; border-collapse:collapse; margin-top:10px; }
+table.info td { border:1px solid #e6e6e6; padding:8px; vertical-align:top; font-size:13px; }
+/* small print */
+.norma { font-size:13px; margin-top:12px; }
+.barcode { display:block; margin:10px auto; height:36px; }
+/* PDF print settings */
+@page { size: A4; margin: 18mm; }
+.laudo, .laudo table, .laudo h3 { page-break-inside: avoid; }
+/* ensure no header/foot repeated */
+header { position: static; }
