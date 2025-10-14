@@ -1,37 +1,35 @@
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="utf-8">
-    <title>Laudo {{ "%04d"|format(laudo_number) }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-      body { font-family: Arial, sans-serif; padding: 24px; color: #222; }
-      .header { text-align: center; margin-bottom: 12px; }
-      .header img { max-height: 110px; display: inline-block; }
-      .title { text-align: center; margin-top: 8px; margin-bottom: 20px; }
-      .content { background: #fff; padding: 18px; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,0.04); }
-    </style>
-  </head>
-  <body>
-    <div class="header laudo-header">
-      <img src="{{ url_for('static', filename='img/logo_master.png') }}" alt="LOGO">
-    </div>
-    <div class="title">
-      <h2>Laudo Técnico Nº {{ "%04d"|format(laudo_number) }}</h2>
-      <div class="small-muted">Emitido em: {{ date }}</div>
-    </div>
-    <div class="content">
-      <h5>Atestado</h5>
-      <p class="fixed-text">{{ fixed_text }}</p>
-      {% if observations %}
-      <hr>
-      <h6>Observações</h6>
-      <p>{{ observations }}</p>
-      {% endif %}
-    </div>
-    <div class="footer">
-      <p>Emitido eletronicamente.</p>
-    </div>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div class="laudo">
+  <h2>Laudo Nº {{ dados.numero_laudo }}</h2>
+  <p>Atestamos para os devidos fins que o processo de Higienização de Caixas Plásticas utilizado pela empresa Organizações Salomão Martins Ltda, portadora do CNPJ 59.508.117/0001-23, CREA MG 241837, Registro IMA Nº 19.336, localizada à Rod. BR-040, 383 – Galpão 01, Bairro Vila Paris, Contagem, Minas Gerais, no CEP 32.150-340; é realizado de acordo com as normas e padrões necessários.</p>
+  <h3>Dados do Laudo</h3>
+  <ul>
+    <li><strong>Equipamento:</strong> {{ dados.equipamento }}</li>
+    <li><strong>Produtos Utilizados:</strong> {{ dados.produtos_utilizados }}</li>
+    <li><strong>Processo:</strong> {{ dados.processo }}</li>
+    <li><strong>Nome do Cliente:</strong> {{ dados.nome_cliente }}</li>
+    <li><strong>CPF/CNPJ:</strong> {{ dados.cpf_cnpj }}</li>
+    <li><strong>Endereço:</strong> {{ dados.endereco }}</li>
+    <li><strong>Bairro:</strong> {{ dados.bairro }}</li>
+    <li><strong>UF:</strong> {{ dados.uf }}</li>
+    <li><strong>CEP:</strong> {{ dados.cep }}</li>
+    <li><strong>Veículo Transportador:</strong> {{ dados.veiculo }}</li>
+    <li><strong>Marca:</strong> {{ dados.marca }}</li>
+    <li><strong>Placa/UF:</strong> {{ dados.placa }}</li>
+    <li><strong>Nome do Motorista:</strong> {{ dados.motorista }}</li>
+    <li><strong>CPF/ID:</strong> {{ dados.cpf_motorista }}</li>
+    <li><strong>Total de Caixas Higienizadas:</strong> {{ dados.total_caixas }}</li>
+    <li><strong>Modelo de Caixa:</strong> {{ dados.modelo_caixa }}</li>
+  </ul>
+  <p>As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento a IN Conjunta 009/2002 SARCxANVISAxINMETRO.</p>
+  <p>O Atestado de Higienização de Caixas Plásticas Vazias é válido para o trânsito até {{ dados.data_geracao }}.</p>
+  <p>Validade para entrada no CEASA: {{ dados.data_validade }}</p>
+  <p>Confira a autenticidade desse laudo através do código de barra impresso abaixo, integrado ao nosso WebService.</p>
+  <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras">
+  <form action="{{ url_for('gerar_pdf') }}" method="post" target="_blank">
+    {% for k, v in dados.items() %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
+    <button type="submit" class="btn-download">Baixar PDF</button>
+  </form>
+</div>
+{% endblock %}
