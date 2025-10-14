@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="laudo">
-  <h2>Laudo Nº {{ dados.numero_laudo }}</h2>
-  <p>Atestamos para os devidos fins que o processo de Higienização de Caixas Plásticas utilizado pela empresa Organizações Salomão Martins Ltda, portadora do CNPJ 59.508.117/0001-23, CREA MG 241837, Registro IMA Nº 19.336, localizada à Rod. BR-040, 383 – Galpão 01, Bairro Vila Paris, Contagem, Minas Gerais, no CEP 32.150-340; é realizado de acordo com as normas e padrões necessários.</p>
+  <p style="text-align:right;"><b>Nº {{ dados.numero_laudo }}</b></p>
+  <p>O Atestado de Higienização de Caixas Plásticas Vazias é válido para o trânsito até {{ dados.data_geracao }}</p>
+  <p>Validade para entrada no CEASA: {{ dados.data_validade }}</p>
   <h3>Dados do Laudo</h3>
   <ul>
     <li><strong>Equipamento:</strong> {{ dados.equipamento }}</li>
@@ -23,13 +24,11 @@
     <li><strong>Modelo de Caixa:</strong> {{ dados.modelo_caixa }}</li>
   </ul>
   <p>As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento a IN Conjunta 009/2002 SARCxANVISAxINMETRO.</p>
-  <p>O Atestado de Higienização de Caixas Plásticas Vazias é válido para o trânsito até {{ dados.data_geracao }}.</p>
-  <p>Validade para entrada no CEASA: {{ dados.data_validade }}</p>
-  <p>Confira a autenticidade desse laudo através do código de barra impresso abaixo, integrado ao nosso WebService.</p>
+  <p>Confira a autenticidade desse laudo através do código de barras abaixo:</p>
   <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras">
   <form action="{{ url_for('gerar_pdf') }}" method="post" target="_blank">
     {% for k, v in dados.items() %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
-    <button type="submit" class="btn-download">Baixar PDF</button>
+    <button type="submit">Baixar PDF</button>
   </form>
 </div>
 {% endblock %}

@@ -1,15 +1,14 @@
-from flask import Flask, render_template, request, send_file, redirect, url_for
-import io, json, requests, datetime, base64
+from flask import Flask, render_template, request, send_file
+import io, json, requests, datetime, base64, os
 from weasyprint import HTML
 from barcode import Code128
 from barcode.writer import ImageWriter
 
 app = Flask(__name__)
 
-# Configurações do GitHub remoto
 GITHUB_REPO = "deciusmotta/laudo"
 GITHUB_FILE = "laudos.json"
-GITHUB_TOKEN = None  # Defina via variável de ambiente no Render
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
 def get_next_laudo():
     headers = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
@@ -22,8 +21,9 @@ def get_next_laudo():
         numero = 1
     content = {"ultimo_numero": numero}
     encoded = base64.b64encode(json.dumps(content).encode()).decode()
-    data = {"message": f"Atualiza laudo {numero}", "content": encoded, "branch": "main"}
-    requests.put(url, headers=headers, json=data)
+    if GITHUB_TOKEN:
+        data = {"message": f"Atualiza laudo {numero}", "content": encoded, "branch": "main", "sha": r.json().get("sha") if r.status_code==200 else None}
+        requests.put(url, headers=headers, json=data)
     return numero
 
 @app.route("/", methods=["GET", "POST"])
@@ -36,11 +36,10 @@ def index():
         dados.update({
             "numero_laudo": numero_laudo,
             "data_geracao": hoje.strftime("%d/%m/%Y"),
-            "data_validade": validade.strftime("%d/%m/%Y"),
+            "data_validade": validade.strftime("%d/%m/%Y")
         })
         buffer = io.BytesIO()
-        barcode = Code128(str(numero_laudo), writer=ImageWriter())
-        barcode.save(buffer, {"format": "PNG"})
+        Code128(str(numero_laudo), writer=ImageWriter()).write(buffer, {"module_height": 15.0, "font_size": 10, "text_distance": 1})
         dados["barcode"] = base64.b64encode(buffer.getvalue()).decode()
         return render_template("laudo_template.html", dados=dados)
     return render_template("index.html")

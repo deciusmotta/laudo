@@ -4,12 +4,3 @@ services:
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
-    plan: free
-    envVars:
-      - key: GITHUB_REPO
-        value: deciusmotta/laudo
-      - key: GITHUB_FILE
-        value: laudos.json
-      - key: GITHUB_TOKEN
-        sync: false   # Defina manualmente no painel do Render (Settings → Environment)
-

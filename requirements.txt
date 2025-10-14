@@ -1,5 +1,5 @@
 Flask
 requests
-gunicorn
 weasyprint
 python-barcode
+gunicorn
