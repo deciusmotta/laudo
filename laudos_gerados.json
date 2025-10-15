@@ -97,5 +97,14 @@
         "nome_cliente": "ANA LUIZA DA SILVA RODRIGUES",
         "quantidade_caixas": "100",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "22",
+        "data_emissao": "15/10/2025",
+        "data_validade": "30/10/2025",
+        "cpf_cnpj_cliente": "sgsg",
+        "nome_cliente": "sgsdg",
+        "quantidade_caixas": "sgsg",
+        "modelo_caixas": "sgsg"
     }
 ]
