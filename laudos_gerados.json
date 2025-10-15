@@ -61,5 +61,14 @@
         "nome_cliente": "wewetwt",
         "quantidade_caixas": "ncvncvn",
         "modelo_caixas": "cnvcvncvn"
+    },
+    {
+        "numero_laudo": "18",
+        "data_emissao": "15/10/2025",
+        "data_validade": "30/10/2025",
+        "cpf_cnpj_cliente": "sgsgsg",
+        "nome_cliente": "sgsgsdg",
+        "quantidade_caixas": "sgsg",
+        "modelo_caixas": "sgsgs"
     }
 ]
