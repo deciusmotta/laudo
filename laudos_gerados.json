@@ -52,5 +52,14 @@
         "nome_cliente": "SFSF",
         "quantidade_caixas": "SDFSDF",
         "modelo_caixas": "SFSF"
+    },
+    {
+        "numero_laudo": "17",
+        "data_emissao": "15/10/2025",
+        "data_validade": "30/10/2025",
+        "cpf_cnpj_cliente": "dfgdgd",
+        "nome_cliente": "wewetwt",
+        "quantidade_caixas": "ncvncvn",
+        "modelo_caixas": "cnvcvncvn"
     }
 ]
