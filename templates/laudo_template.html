@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="laudo" style="max-width:800px; margin:auto; padding:20px; border:1px solid #ccc; border-radius:8px; font-size:14px;">
-  <p style="text-align:right;"><b>Nº {{ dados.numero_laudo }}</b></p>
+  <p style="text-align:right;"><b>ATESTADO DE HIGIENIZAÇÃO Nº {{ dados.numero_laudo }}</b></p>
   <p>O Atestado de Higienização de Caixas Plásticas Vazias é válido para o trânsito até {{ dados.data_geracao }}</p>
   <p>Validade para entrada no CEASA: {{ dados.data_validade }}</p>
 
@@ -17,9 +17,9 @@
     {% endfor %}
   </table>
 
-  <p>As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento a IN Conjunta 009/2002 SARCxANVISAxINMETRO.</p><br>
-  <p></p><strong>Validade desse Atestado:</strong> {{ dados.data_validade }}</p><br>
-  <p><strong>Contagem,</strong> {{ dados.data_geracao }}</p><br>
+  <p>As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento a IN Conjunta 009/2002 SARCxANVISAxINMETRO.</p>
+  <p></p><strong>Validade desse Atestado:</strong> {{ dados.data_validade }}</p>
+  <p><strong>Contagem,</strong> {{ dados.data_geracao }}</p>
 
   <p>Confira a autenticidade desse laudo através do código de barras abaixo:</p>
   <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras" style="display:block; margin:10px auto;">
