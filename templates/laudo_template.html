@@ -23,10 +23,5 @@
 
   <p>Confira a autenticidade desse laudo através do código de barras abaixo:</p>
   <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras" style="display:block; margin:10px auto;">
-
-  <form action="{{ url_for('gerar_pdf') }}" method="post" target="_blank">
-    {% for k, v in dados.items() %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
-    <button type="submit">Baixar PDF</button>
-  </form>
 </div>
 {% endblock %}
