@@ -152,23 +152,7 @@ def index():
         return render_template("laudo_template.html", dados=dados)
 
     return render_template("index.html")
-
-
-# =====================================================
-# Gerar PDF
-# =====================================================
-@app.route("/pdf", methods=["POST"])
-def gerar_pdf():
-    dados = request.form.to_dict()
-    html = render_template("laudo_template.html", dados=dados)
-    pdf = HTML(string=html).write_pdf()
-    return send_file(
-        io.BytesIO(pdf),
-        mimetype="application/pdf",
-        as_attachment=True,
-        download_name="laudo.pdf"
-    )
-
+    
 
 # =====================================================
 # Endpoint para consulta dos laudos (JSON)
