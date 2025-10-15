@@ -88,5 +88,14 @@
         "nome_cliente": "LEONARDO DE FARIA",
         "quantidade_caixas": "500",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "21",
+        "data_emissao": "15/10/2025",
+        "data_validade": "30/10/2025",
+        "cpf_cnpj_cliente": "02318366608",
+        "nome_cliente": "ANA LUIZA DA SILVA RODRIGUES",
+        "quantidade_caixas": "100",
+        "modelo_caixas": "6424"
     }
 ]
