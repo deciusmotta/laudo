@@ -25,5 +25,14 @@
         "nome_cliente": "dfgfdgd",
         "quantidade_caixas": "343",
         "modelo_caixas": "gugu"
+    },
+    {
+        "numero_laudo": "14",
+        "data_emissao": "15/10/2025",
+        "data_validade": "30/10/2025",
+        "cpf_cnpj_cliente": "35345345",
+        "nome_cliente": "sfsfsf",
+        "quantidade_caixas": "fgdfg",
+        "modelo_caixas": "dfgdfg"
     }
 ]
