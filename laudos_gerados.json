@@ -115,5 +115,14 @@
         "nome_cliente": "EULA PAULA VIEIRA SANTOS DE SOUZA",
         "quantidade_caixas": "10",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "24",
+        "data_emissao": "16/10/2025",
+        "data_validade": "31/10/2025",
+        "cpf_cnpj_cliente": "08853625600",
+        "nome_cliente": "EULA PAULA VIEIRA SANTOS DE SOUZA",
+        "quantidade_caixas": "5",
+        "modelo_caixas": "6424"
     }
 ]
