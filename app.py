@@ -158,7 +158,7 @@ def index():
 # Endpoint para consulta dos laudos (JSON)
 # =====================================================
 @app.route("/api/laudos", methods=["GET"])
-def listar_laudos():
+def gerar_laudo():
     if os.path.exists(LOCAL_LAUDOS_FILE):
         with open(LOCAL_LAUDOS_FILE, "r", encoding="utf-8") as f:
             todos_laudos = json.load(f)
