@@ -5,7 +5,7 @@
         "data_validade": "29/10/2025",
         "cpf_cnpj_cliente": "",
         "nome_cliente": "dgdfg",
-        "quantidade_caixas": "",
+        "quantidade_caixas": "12",
         "modelo_caixas": ""
     },
     {
@@ -14,7 +14,7 @@
         "data_validade": "29/10/2025",
         "cpf_cnpj_cliente": "",
         "nome_cliente": "dgdfgd",
-        "quantidade_caixas": "",
+        "quantidade_caixas": "16",
         "modelo_caixas": ""
     },
     {
@@ -32,7 +32,7 @@
         "data_validade": "30/10/2025",
         "cpf_cnpj_cliente": "35345345",
         "nome_cliente": "sfsfsf",
-        "quantidade_caixas": "fgdfg",
+        "quantidade_caixas": "25",
         "modelo_caixas": "dfgdfg"
     },
     {
@@ -41,7 +41,7 @@
         "data_validade": "30/10/2025",
         "cpf_cnpj_cliente": "SFSF",
         "nome_cliente": "SFSF",
-        "quantidade_caixas": "SDFSDF",
+        "quantidade_caixas": "69",
         "modelo_caixas": "SFSF"
     },
     {
@@ -50,7 +50,7 @@
         "data_validade": "30/10/2025",
         "cpf_cnpj_cliente": "SFSF",
         "nome_cliente": "SFSF",
-        "quantidade_caixas": "SDFSDF",
+        "quantidade_caixas": "27",
         "modelo_caixas": "SFSF"
     },
     {
@@ -59,7 +59,7 @@
         "data_validade": "30/10/2025",
         "cpf_cnpj_cliente": "dfgdgd",
         "nome_cliente": "wewetwt",
-        "quantidade_caixas": "ncvncvn",
+        "quantidade_caixas": "87",
         "modelo_caixas": "cnvcvncvn"
     },
     {
@@ -68,7 +68,7 @@
         "data_validade": "30/10/2025",
         "cpf_cnpj_cliente": "sgsgsg",
         "nome_cliente": "sgsgsdg",
-        "quantidade_caixas": "sgsg",
+        "quantidade_caixas": "18",
         "modelo_caixas": "sgsgs"
     },
     {
@@ -104,7 +104,7 @@
         "data_validade": "30/10/2025",
         "cpf_cnpj_cliente": "sgsg",
         "nome_cliente": "sgsdg",
-        "quantidade_caixas": "sgsg",
+        "quantidade_caixas": "43",
         "modelo_caixas": "sgsg"
     },
     {
@@ -131,14 +131,14 @@
         "data_validade": "04/11/2025",
         "cpf_cnpj_cliente": "34535345",
         "nome_cliente": "dgdfg",
-        "quantidade_caixas": "ertert",
+        "quantidade_caixas": "21",
         "modelo_caixas": "erterte"
     },
     {
         "numero_laudo": "0170026",
         "data_emissao": "20/10/2025",
         "data_validade": "04/11/2025",
-        "cpf_cnpj_cliente": "sgsgsdg",
+        "cpf_cnpj_cliente": "54",
         "nome_cliente": "sdgsdgs",
         "quantidade_caixas": "sgsg",
         "modelo_caixas": "sgsg"
