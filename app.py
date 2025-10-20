@@ -31,19 +31,24 @@ def get_next_laudo():
     else:
         numero = 1
 
+    # --- Adição: prefixo fixo do higienizador e formatação ---
+    PREFIXO_HIGIENIZADOR = "017"
+    numero_formatado = f"{PREFIXO_HIGIENIZADOR}{numero:04d}"  # Ex: 0170001
+
+    # Atualiza o controle remoto (GitHub)
     content = {"ultimo_numero": numero}
     encoded = base64.b64encode(json.dumps(content).encode()).decode()
 
     if GITHUB_TOKEN:
         data = {
-            "message": f"Atualiza número do laudo {numero}",
+            "message": f"Atualiza número do laudo {numero_formatado}",
             "content": encoded,
             "branch": "main",
             "sha": r.json().get("sha") if r.status_code == 200 else None
         }
         requests.put(url, headers=headers, json=data)
 
-    return numero
+    return numero_formatado
 
 
 # =====================================================
