@@ -151,5 +151,14 @@
         "nome_cliente": "Décius",
         "quantidade_caixas": "36",
         "modelo_caixas": "Modelo de Teste"
+    },
+    {
+        "numero_laudo": "0170028",
+        "data_emissao": "20/10/2025",
+        "data_validade": "04/11/2025",
+        "cpf_cnpj_cliente": "7877469939",
+        "nome_cliente": "José Bastião",
+        "quantidade_caixas": "14",
+        "modelo_caixas": "37"
     }
 ]
