@@ -136,12 +136,15 @@ def index():
         data_emissao = datetime.now()
         validade = data_emissao + timedelta(days=15)
         data_emissao_str = data_emissao.strftime('%d/%m/%Y')
+        data_geracao_mais_um = datetime.now() + timedelta(days=1)
+        data_geracao_mais_um_str = data_geracao_mais_um.strftime('%d/%m/%Y')
         validade_str = validade.strftime('%d/%m/%Y')
 
         dados.update({
             "numero_laudo": numero_laudo,
             "data_geracao": data_emissao_str,
-            "data_validade": validade_str
+            "data_validade": validade_str,
+            "data_geracao_mais_um": data_geracao_mais_um_str
         })
 
         # Código de barras
