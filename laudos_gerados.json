@@ -169,5 +169,14 @@
         "nome_cliente": "sfsfs",
         "quantidade_caixas": "43",
         "modelo_caixas": "12"
+    },
+    {
+        "numero_laudo": "0170030",
+        "data_emissao": "20/10/2025",
+        "data_validade": "04/11/2025",
+        "cpf_cnpj_cliente": "53225",
+        "nome_cliente": "afasfa",
+        "quantidade_caixas": "34",
+        "modelo_caixas": "fsdfsd"
     }
 ]
