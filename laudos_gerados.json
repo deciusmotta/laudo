@@ -133,5 +133,14 @@
         "nome_cliente": "dgdfg",
         "quantidade_caixas": "ertert",
         "modelo_caixas": "erterte"
+    },
+    {
+        "numero_laudo": "0170026",
+        "data_emissao": "20/10/2025",
+        "data_validade": "04/11/2025",
+        "cpf_cnpj_cliente": "sgsgsdg",
+        "nome_cliente": "sdgsdgs",
+        "quantidade_caixas": "sgsg",
+        "modelo_caixas": "sgsg"
     }
 ]
