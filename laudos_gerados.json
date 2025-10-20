@@ -142,5 +142,14 @@
         "nome_cliente": "sdgsdgs",
         "quantidade_caixas": "28",
         "modelo_caixas": "sgsg"
+    },
+    {
+        "numero_laudo": "0170027",
+        "data_emissao": "20/10/2025",
+        "data_validade": "04/11/2025",
+        "cpf_cnpj_cliente": "04098481634",
+        "nome_cliente": "Décius",
+        "quantidade_caixas": "36",
+        "modelo_caixas": "Modelo de Teste"
     }
 ]
