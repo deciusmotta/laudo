@@ -160,5 +160,14 @@
         "nome_cliente": "José Bastião",
         "quantidade_caixas": "14",
         "modelo_caixas": "37"
+    },
+    {
+        "numero_laudo": "0170029",
+        "data_emissao": "20/10/2025",
+        "data_validade": "04/11/2025",
+        "cpf_cnpj_cliente": "2344524",
+        "nome_cliente": "sfsfs",
+        "quantidade_caixas": "43",
+        "modelo_caixas": "12"
     }
 ]
