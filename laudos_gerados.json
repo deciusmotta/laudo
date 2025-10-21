@@ -205,5 +205,14 @@
         "nome_cliente": "GILSON GOMES DO CARMO",
         "quantidade_caixas": "160",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170034",
+        "data_emissao": "21/10/2025",
+        "data_validade": "05/11/2025",
+        "cpf_cnpj_cliente": "19.886.150/0005-04",
+        "nome_cliente": "UVALE FRUTAS TROPICAIS ",
+        "quantidade_caixas": "400",
+        "modelo_caixas": "6424"
     }
 ]
