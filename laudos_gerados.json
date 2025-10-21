@@ -187,5 +187,14 @@
         "nome_cliente": "afasfa",
         "quantidade_caixas": "34",
         "modelo_caixas": "fsdfsd"
+    },
+    {
+        "numero_laudo": "0170032",
+        "data_emissao": "21/10/2025",
+        "data_validade": "05/11/2025",
+        "cpf_cnpj_cliente": "93741880663",
+        "nome_cliente": "GILSON GOMES DO CARMO",
+        "quantidade_caixas": "160",
+        "modelo_caixas": "6424"
     }
 ]
