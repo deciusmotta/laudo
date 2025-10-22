@@ -313,5 +313,14 @@
         "nome_cliente": "GILSON GOMES DO CARMO",
         "quantidade_caixas": "115",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170046",
+        "data_emissao": "22/10/2025",
+        "data_validade": "06/11/2025",
+        "cpf_cnpj_cliente": "93741880663",
+        "nome_cliente": "GILSON GOMES DO CARMO",
+        "quantidade_caixas": "115",
+        "modelo_caixas": "6424"
     }
 ]
