@@ -2,13 +2,16 @@
 {% block content %}
 <h2>Gerar Laudo de Higienização</h2>
 <form method="POST">
-<label>Equipamento:</label><input type="text" name="equipamento" style="width: 50%;"><br>
+<label for="equipamento">Equipamento:</label>
+<textarea id="equipamento" name="equipamento" rows="1" style="width: 20%;">
 <label for="produtos_utilizados">Produtos Utilizados:</label>
+MÁQUINA LAVADORA TIPO TÚNEL
+</textarea>
 <textarea id="produtos_utilizados" name="produtos_utilizados" rows="8" style="width: 100%;">
 KALYCLEAN
-Registro MS 315460158   Lote 10013020   Fabricação     Conc. 0,50 %
+Registro MS 315460160   Lote 10039988   Fabricação 06/08/2025   Validade: 24 meses   Conc. 0,50 %
 KALYCLEAN
-Registro MS 315460140   Lote 10013703   Fabricação     Conc. 2,00 %
+Registro MS 315460140   Lote 10039308   Fabricação 14/07/2025   Validade: 24 meses   Conc. 2,00 %
 Marca 253   Marca KALUKIM
 </textarea>
 
