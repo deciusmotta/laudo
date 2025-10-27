@@ -1,28 +1,66 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="laudo" style="max-width:800px; margin:auto; padding:20px; border:1px solid #ccc; border-radius:8px; font-size:14px;">
-  <p style="text-align:right;"><b>ATESTADO DE HIGIENIZAÇÃO Nº {{ dados.numero_laudo }}</b></p>
-  <b>Organizações Salomão Martins Ltda - CNPJ 59.508.117/0001-23</b><br>
-  Rodovia BR-040, 383 - Galpão 01 - Vila Paris, CEP 32150-340 - Contagem/MG <p></p>
-  <b>O Atestado de Higienização de Caixas Plásticas Vazias é válido para o trânsito até {{ dados.data_geracao_mais_um }}</b>
-  <p>Validade para entrada no CEASA: {{ dados.data_validade }}</p>
+<div class="laudo" 
+     style="width:210mm; min-height:297mm; margin:auto; padding:30px; 
+            border:4px double #004d40; border-radius:12px; 
+            font-family:'Segoe UI', Arial, sans-serif; font-size:14px; 
+            color:#333; background:#fff; box-shadow:0 0 10px rgba(0,0,0,0.1);">
 
-  <h3>Dados do Laudo</h3>
-  <table style="width:100%; border-collapse: collapse;">
+  <!-- Cabeçalho com logo -->
+  <div style="text-align:center; margin-bottom:20px;">
+    <img src="{{ url_for('static', filename='logo_master.png') }}" 
+         alt="Logo Master Reciclagem e Higienização" 
+         style="max-width:180px; height:auto; margin-bottom:8px;">
+    <h2 style="margin:5px 0; color:#004d40;">ATESTADO DE HIGIENIZAÇÃO</h2>
+    <p style="font-weight:bold; font-size:13px;">Nº {{ dados.numero_laudo }}</p>
+  </div>
+
+  <!-- Dados da empresa -->
+  <div style="text-align:center; font-size:13px; margin-bottom:25px; line-height:1.4;">
+    <b>Organizações Salomão Martins Ltda - CNPJ 59.508.117/0001-23</b><br>
+    Rodovia BR-040, 383 - Galpão 01 - Vila Paris<br>
+    CEP 32150-340 - Contagem/MG
+  </div>
+
+  <!-- Texto principal -->
+  <p style="text-align:justify; margin-bottom:10px;">
+    <strong>O Atestado de Higienização de Caixas Plásticas Vazias</strong> é válido 
+    para o trânsito até a data informada abaixo.
+  </p>
+  <p style="margin-bottom:20px;"><b>Validade para entrada no CEASA:</b> {{ dados.data_validade }}</p>
+
+  <!-- Tabela dos dados -->
+  <h3 style="background:#004d40; color:#fff; padding:8px; border-radius:4px; font-size:15px;">
+    Dados do Laudo
+  </h3>
+  <table style="width:100%; border-collapse:collapse; margin-top:10px; margin-bottom:25px;">
     {% for label, value in dados.items() %}
-      {% if label not in ["numero_laudo","barcode","data_geracao","data_validade"] %}
+      {% if label not in ["numero_laudo","barcode","data_geracao","data_validade","data_geracao_mais_um"] %}
       <tr>
-        <td style="border:1px solid #ccc; padding:4px; font-weight:bold;">{{ label.replace('_',' ').title() }}</td>
-        <td style="border:1px solid #ccc; padding:4px;">{{ value }}</td>
+        <td style="border:1px solid #ccc; padding:6px; font-weight:600; background:#f9f9f9; width:35%;">
+          {{ label.replace('_',' ').title() }}
+        </td>
+        <td style="border:1px solid #ccc; padding:6px;">{{ value }}</td>
       </tr>
       {% endif %}
     {% endfor %}
   </table>
 
-  <p>As caixas plásticas são higienizadas de acordo com a NBR 15.674, em cumprimento a IN Conjunta 009/2002 SARCxANVISAxINMETRO.</p>
-  <p><strong>Contagem,</strong> {{ dados.data_geracao }}</p>
+  <!-- Rodapé -->
+  <p style="text-align:justify;">
+    As caixas plásticas são higienizadas conforme a norma <strong>NBR 15.674</strong>, 
+    em cumprimento à <strong>IN Conjunta 009/2002 SARC x ANVISA x INMETRO</strong>.
+  </p>
 
-  <p>Confira a autenticidade desse laudo através do código de barras abaixo:</p>
-  <img src="data:image/png;base64,{{ dados.barcode }}" alt="Código de barras" style="display:block; margin:10px auto;">
+  <p style="margin-top:25px; text-align:right;">
+    <strong>Contagem,</strong> {{ dados.data_geracao }}
+  </p>
+
+  <div style="text-align:center; margin-top:25px;">
+    <p style="margin-bottom:8px;">Confira a autenticidade deste laudo através do código de barras abaixo:</p>
+    <img src="data:image/png;base64,{{ dados.barcode }}" 
+         alt="Código de barras" 
+         style="display:block; margin:0 auto; max-width:180px; height:auto;">
+  </div>
 </div>
 {% endblock %}
