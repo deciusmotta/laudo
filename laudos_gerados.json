@@ -583,5 +583,14 @@
         "nome_cliente": "Distribuidora De Frutas Araguaia LTDA",
         "quantidade_caixas": "390",
         "modelo_caixas": "6024"
+    },
+    {
+        "numero_laudo": "0170085",
+        "data_emissao": "27/10/2025",
+        "data_validade": "11/11/2025",
+        "cpf_cnpj_cliente": "86.524.253/0001-80",
+        "nome_cliente": "Distribuidora De Frutas Araguaia LTDA",
+        "quantidade_caixas": "390",
+        "modelo_caixas": "6024"
     }
 ]
