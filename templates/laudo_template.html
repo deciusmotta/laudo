@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="laudo" 
-     style="width:210mm; min-height:297mm; margin:auto; padding:30px; 
+     style="width:210mm; min-height:297mm; margin:15mm auto; padding:20mm; 
             border:4px double #004d40; border-radius:12px; 
             font-family:'Segoe UI', Arial, sans-serif; font-size:14px; 
             color:#333; background:#fff; box-shadow:0 0 10px rgba(0,0,0,0.1);">
 
-  <!-- Cabeçalho (SEM <header>) -->
+  <!-- Cabeçalho -->
   <div style="text-align:center; margin-bottom:20px;">
     <img src="{{ url_for('static', filename='img/logo_master.png') }}" 
          alt="Logo Master Reciclagem e Higienização" 
@@ -38,10 +38,10 @@
     {% for label, value in dados.items() %}
       {% if label not in ["numero_laudo","barcode","data_geracao","data_validade","data_geracao_mais_um","produtos_utilizados"] %}
       <tr>
-        <td style="border:1px solid #ccc; padding:6px; font-weight:600; background:#f9f9f9; width:35%;">
+        <td style="border:1px solid #ccc; padding:6px; font-weight:600; background:#f9f9f9; width:25%;">
           {{ label.replace('_',' ').title() }}
         </td>
-        <td style="border:1px solid #ccc; padding:6px;">{{ value }}</td>
+        <td style="border:1px solid #ccc; padding:6px; width:75%;">{{ value }}</td>
       </tr>
 
       {# Insere os produtos logo após o campo Processo #}
