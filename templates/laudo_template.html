@@ -6,13 +6,12 @@
             font-family:'Segoe UI', Arial, sans-serif; font-size:14px; 
             color:#333; background:#fff; box-shadow:0 0 10px rgba(0,0,0,0.1);">
 
-  <!-- Cabeçalho (SEM <header> tag) com logo e número -->
+  <!-- Cabeçalho (SEM <header>) -->
   <div style="text-align:center; margin-bottom:20px;">
     <img src="{{ url_for('static', filename='img/logo_master.png') }}" 
          alt="Logo Master Reciclagem e Higienização" 
          style="max-width:200px; height:auto; margin-bottom:8px;">
-    <h2 style="margin:5px 0; color:#004d40;">ATESTADO DE HIGIENIZAÇÃO</h2>
-    <p style="font-weight:bold; font-size:13px;">Nº {{ dados.numero_laudo }}</p>
+    <h2 style="margin:5px 0; color:#004d40;">ATESTADO DE HIGIENIZAÇÃO Nº {{ dados.numero_laudo }}</h2>
     <p style="margin:0; font-size:13px;">Conforme Norma ABNT NBR 15674</p>
   </div>
 
@@ -31,7 +30,7 @@
   </p>
   <p style="margin-bottom:20px;"><b>Validade para entrada no CEASA:</b> {{ dados.data_validade }}</p>
 
-  <!-- Tabela dos dados: aqui inserimos os Produtos Utilizados imediatamente após o Processo -->
+  <!-- Tabela de dados -->
   <h3 style="background:#004d40; color:#fff; padding:8px; border-radius:4px; font-size:15px;">
     Dados do Laudo
   </h3>
@@ -45,27 +44,29 @@
         <td style="border:1px solid #ccc; padding:6px;">{{ value }}</td>
       </tr>
 
-      {# Inserir aqui, logo após a linha cujo label é "processo", a linha Produtos Utilizados #}
+      {# Insere os produtos logo após o campo Processo #}
       {% if label == "processo" %}
         <tr>
           <td style="border:1px solid #ccc; padding:6px; font-weight:600; background:#f9f9f9;">
             Produtos Utilizados
           </td>
-          <td style="border:1px solid #ccc; padding:6px;">
-            {# Se houver lista em dados.produtos_utilizados, exibimos cada item em linha própria,
-               caso contrário mostramos as três linhas padrão solicitadas #}
+          <td style="border:1px solid #ccc; padding:6px; line-height:1.6;">
             {% if dados.produtos_utilizados %}
               {% if dados.produtos_utilizados is string %}
-                <div>{{ dados.produtos_utilizados }}</div>
+                {{ dados.produtos_utilizados | replace('\n', '<br>') | safe }}
               {% else %}
-                {% for p in dados.produtos_utilizados %}
-                  <div>{{ p }}</div>
-                {% endfor %}
+                <ul style="margin:0; padding-left:18px;">
+                  {% for p in dados.produtos_utilizados %}
+                    <li>{{ p }}</li>
+                  {% endfor %}
+                </ul>
               {% endif %}
             {% else %}
-              <div>KALYCLEAN Registro MS 315460160 Lote 10039988 Fabricação 06/08/2025 Validade: 24 meses Conc. 0,50 %</div>
-              <div>KALYCLEAN Registro MS 315460140 Lote 10039308 Fabricação 14/07/2025 Validade: 24 meses Conc. 2,00 %</div>
-              <div>Marca 253 Marca KALUKIM</div>
+              <ul style="margin:0; padding-left:18px;">
+                <li>KALYCLEAN Registro MS 315460160 Lote 10039988 Fabricação 06/08/2025 Validade: 24 meses Conc. 0,50 %</li>
+                <li>KALYCLEAN Registro MS 315460140 Lote 10039308 Fabricação 14/07/2025 Validade: 24 meses Conc. 2,00 %</li>
+                <li>Marca 253 Marca KALUKIM</li>
+              </ul>
             {% endif %}
           </td>
         </tr>
