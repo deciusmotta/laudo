@@ -1,95 +1,98 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="laudo" 
-     style="width:210mm; min-height:297mm; margin:15mm auto; padding:20mm; 
-            border:4px double #004d40; border-radius:12px; 
-            font-family:'Segoe UI', Arial, sans-serif; font-size:14px; 
-            color:#333; background:#fff; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+     style="width:210mm; min-height:297mm; margin:10mm auto; padding:10mm; 
+            background:#fff; box-shadow:0 0 8px rgba(0,0,0,0.1);
+            font-family:'Segoe UI', Arial, sans-serif; font-size:14px; color:#333;">
 
-  <!-- Cabeçalho -->
-  <div style="text-align:center; margin-bottom:20px;">
-    <img src="{{ url_for('static', filename='img/logo_master.png') }}" 
-         alt="Logo Master Reciclagem e Higienização" 
-         style="max-width:200px; height:auto; margin-bottom:8px;">
-    <h2 style="margin:5px 0; color:#004d40;">ATESTADO DE HIGIENIZAÇÃO Nº {{ dados.numero_laudo }}</h2>
-    <p style="margin:0; font-size:13px;">Conforme Norma ABNT NBR 15674</p>
-  </div>
+  <!-- Moldura verde interna -->
+  <div style="border:4px double #004d40; border-radius:12px; padding:15mm;">
 
-  <!-- Dados da empresa -->
-  <div style="text-align:center; font-size:13px; margin-bottom:25px; line-height:1.4;">
-    <b>Organizações Salomão Martins Ltda - CNPJ 59.508.117/0001-23</b><br>
-    Rodovia BR-040, 383 - Galpão 01 - Vila Paris<br>
-    CEP 32150-340 - Contagem/MG<br>
-    <b>Telefone: (31) 99635-1075</b>
-  </div>
+    <!-- Cabeçalho -->
+    <div style="text-align:center; margin-bottom:20px;">
+      <img src="{{ url_for('static', filename='img/logo_master.png') }}" 
+           alt="Logo Master Reciclagem e Higienização" 
+           style="max-width:200px; height:auto; margin-bottom:8px;">
+      <h2 style="margin:5px 0; color:#004d40;">ATESTADO DE HIGIENIZAÇÃO Nº {{ dados.numero_laudo }}</h2>
+      <p style="margin:0; font-size:13px;">Conforme Norma ABNT NBR 15674</p>
+    </div>
 
-  <!-- Texto principal -->
-  <p style="text-align:justify; margin-bottom:10px;">
-    <strong>O Atestado de Higienização de Caixas Plásticas Vazias</strong> é válido 
-    para o trânsito até a data informada abaixo.
-  </p>
-  <p style="margin-bottom:20px;"><b>Validade para entrada no CEASA:</b> {{ dados.data_validade }}</p>
+    <!-- Dados da empresa -->
+    <div style="text-align:center; font-size:13px; margin-bottom:25px; line-height:1.4;">
+      <b>Organizações Salomão Martins Ltda - CNPJ 59.508.117/0001-23</b><br>
+      Rodovia BR-040, 383 - Galpão 01 - Vila Paris<br>
+      CEP 32150-340 - Contagem/MG<br>
+      Telefone: (31) 99635-1075
+    </div>
 
-  <!-- Tabela de dados -->
-  <h3 style="background:#004d40; color:#fff; padding:8px; border-radius:4px; font-size:15px;">
-    Dados do Laudo
-  </h3>
-  <table style="width:100%; border-collapse:collapse; margin-top:10px; margin-bottom:25px;">
-    {% for label, value in dados.items() %}
-      {% if label not in ["numero_laudo","barcode","data_geracao","data_validade","data_geracao_mais_um","produtos_utilizados"] %}
-      <tr>
-        <td style="border:1px solid #ccc; padding:6px; font-weight:600; background:#f9f9f9; width:25%;">
-          {{ label.replace('_',' ').title() }}
-        </td>
-        <td style="border:1px solid #ccc; padding:6px; width:75%;">{{ value }}</td>
-      </tr>
+    <!-- Texto principal -->
+    <p style="text-align:justify; margin-bottom:10px;">
+      <strong>O Atestado de Higienização de Caixas Plásticas Vazias</strong> é válido 
+      para o trânsito até a data informada abaixo.
+    </p>
+    <p style="margin-bottom:20px;"><b>Validade para entrada no CEASA:</b> {{ dados.data_validade }}</p>
 
-      {# Insere os produtos logo após o campo Processo #}
-      {% if label == "processo" %}
+    <!-- Tabela de dados -->
+    <h3 style="background:#004d40; color:#fff; padding:8px; border-radius:4px; font-size:15px;">
+      Dados do Laudo
+    </h3>
+    <table style="width:100%; border-collapse:collapse; margin-top:10px; margin-bottom:25px;">
+      {% for label, value in dados.items() %}
+        {% if label not in ["numero_laudo","barcode","data_geracao","data_validade","data_geracao_mais_um","produtos_utilizados"] %}
         <tr>
-          <td style="border:1px solid #ccc; padding:6px; font-weight:600; background:#f9f9f9;">
-            Produtos Utilizados
+          <td style="border:1px solid #ccc; padding:6px; font-weight:600; background:#f9f9f9; width:25%;">
+            {{ label.replace('_',' ').title() }}
           </td>
-          <td style="border:1px solid #ccc; padding:6px; line-height:1.6;">
-            {% if dados.produtos_utilizados %}
-              {% if dados.produtos_utilizados is string %}
-                {{ dados.produtos_utilizados | replace('\n', '<br>') | safe }}
+          <td style="border:1px solid #ccc; padding:6px; width:75%;">{{ value }}</td>
+        </tr>
+
+        {# Insere os produtos logo após o campo Processo #}
+        {% if label == "processo" %}
+          <tr>
+            <td style="border:1px solid #ccc; padding:6px; font-weight:600; background:#f9f9f9;">
+              Produtos Utilizados
+            </td>
+            <td style="border:1px solid #ccc; padding:6px; line-height:1.6;">
+              {% if dados.produtos_utilizados %}
+                {% if dados.produtos_utilizados is string %}
+                  {{ dados.produtos_utilizados | replace('\n', '<br>') | safe }}
+                {% else %}
+                  <ul style="margin:0; padding-left:18px;">
+                    {% for p in dados.produtos_utilizados %}
+                      <li>{{ p }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
               {% else %}
                 <ul style="margin:0; padding-left:18px;">
-                  {% for p in dados.produtos_utilizados %}
-                    <li>{{ p }}</li>
-                  {% endfor %}
+                  <li>KALYCLEAN Registro MS 315460160 Lote 10039988 Fabricação 06/08/2025 Validade: 24 meses Conc. 0,50 %</li>
+                  <li>KALYCLEAN Registro MS 315460140 Lote 10039308 Fabricação 14/07/2025 Validade: 24 meses Conc. 2,00 %</li>
+                  <li>Marca 253 Marca KALUKIM</li>
                 </ul>
               {% endif %}
-            {% else %}
-              <ul style="margin:0; padding-left:18px;">
-                <li>KALYCLEAN Registro MS 315460160 Lote 10039988 Fabricação 06/08/2025 Validade: 24 meses Conc. 0,50 %</li>
-                <li>KALYCLEAN Registro MS 315460140 Lote 10039308 Fabricação 14/07/2025 Validade: 24 meses Conc. 2,00 %</li>
-                <li>Marca 253 Marca KALUKIM</li>
-              </ul>
-            {% endif %}
-          </td>
-        </tr>
-      {% endif %}
-      {% endif %}
-    {% endfor %}
-  </table>
+            </td>
+          </tr>
+        {% endif %}
+        {% endif %}
+      {% endfor %}
+    </table>
 
-  <!-- Rodapé -->
-  <p style="text-align:justify;">
-    As caixas plásticas são higienizadas conforme a norma <strong>NBR 15.674</strong>, 
-    em cumprimento à <strong>IN Conjunta 009/2002 SARC x ANVISA x INMETRO</strong>.
-  </p>
+    <!-- Rodapé -->
+    <p style="text-align:justify;">
+      As caixas plásticas são higienizadas conforme a norma <strong>NBR 15.674</strong>, 
+      em cumprimento à <strong>IN Conjunta 009/2002 SARC x ANVISA x INMETRO</strong>.
+    </p>
 
-  <p style="margin-top:25px; text-align:right;">
-    <strong>Contagem,</strong> {{ dados.data_geracao }}
-  </p>
+    <p style="margin-top:25px; text-align:right;">
+      <strong>Contagem,</strong> {{ dados.data_geracao }}
+    </p>
 
-  <div style="text-align:center; margin-top:25px;">
-    <p style="margin-bottom:8px;">Confira a autenticidade deste laudo através do código de barras abaixo:</p>
-    <img src="data:image/png;base64,{{ dados.barcode }}" 
-         alt="Código de barras" 
-         style="display:block; margin:0 auto; max-width:150px; height:auto;">
+    <div style="text-align:center; margin-top:25px;">
+      <p style="margin-bottom:8px;">Confira a autenticidade deste laudo através do código de barras abaixo:</p>
+      <img src="data:image/png;base64,{{ dados.barcode }}" 
+           alt="Código de barras" 
+           style="display:block; margin:0 auto; max-width:150px; height:auto;">
+    </div>
   </div>
 </div>
 {% endblock %}
