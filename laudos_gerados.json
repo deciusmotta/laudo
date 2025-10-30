@@ -817,5 +817,14 @@
         "nome_cliente": "WELLINGNTON ALVES DE SOUSA",
         "quantidade_caixas": "200",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170111",
+        "data_emissao": "30/10/2025",
+        "data_validade": "14/11/2025",
+        "cpf_cnpj_cliente": "138.873.336-67",
+        "nome_cliente": "WELLINGNTON ALVES DE SOUSA",
+        "quantidade_caixas": "200",
+        "modelo_caixas": "6424"
     }
 ]
