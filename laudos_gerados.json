@@ -772,5 +772,14 @@
         "nome_cliente": "CVD ALIMENTOS LTDA",
         "quantidade_caixas": "191",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170106",
+        "data_emissao": "30/10/2025",
+        "data_validade": "14/11/2025",
+        "cpf_cnpj_cliente": "644.635.166-68",
+        "nome_cliente": "RONALDO DE FREITAS CAMPOS",
+        "quantidade_caixas": "100",
+        "modelo_caixas": "6424"
     }
 ]
