@@ -889,5 +889,14 @@
         "nome_cliente": "UVALE FRUTAS TROPICAIS ",
         "quantidade_caixas": "400",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170119",
+        "data_emissao": "01/11/2025",
+        "data_validade": "16/11/2025",
+        "cpf_cnpj_cliente": "19.886.150/0005-04",
+        "nome_cliente": "UVALE FRUTAS TROPICAIS ",
+        "quantidade_caixas": "800",
+        "modelo_caixas": "6424"
     }
 ]
