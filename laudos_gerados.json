@@ -1,77 +1,5 @@
 [
     {
-        "numero_laudo": "0170011",
-        "data_emissao": "14/10/2025",
-        "data_validade": "29/10/2025",
-        "cpf_cnpj_cliente": "",
-        "nome_cliente": "dgdfg",
-        "quantidade_caixas": "12",
-        "modelo_caixas": ""
-    },
-    {
-        "numero_laudo": "0170012",
-        "data_emissao": "14/10/2025",
-        "data_validade": "29/10/2025",
-        "cpf_cnpj_cliente": "",
-        "nome_cliente": "dgdfgd",
-        "quantidade_caixas": "16",
-        "modelo_caixas": ""
-    },
-    {
-        "numero_laudo": "0170013",
-        "data_emissao": "14/10/2025",
-        "data_validade": "29/10/2025",
-        "cpf_cnpj_cliente": "43345345345",
-        "nome_cliente": "dfgfdgd",
-        "quantidade_caixas": "343",
-        "modelo_caixas": "gugu"
-    },
-    {
-        "numero_laudo": "0170014",
-        "data_emissao": "15/10/2025",
-        "data_validade": "30/10/2025",
-        "cpf_cnpj_cliente": "35345345",
-        "nome_cliente": "sfsfsf",
-        "quantidade_caixas": "25",
-        "modelo_caixas": "dfgdfg"
-    },
-    {
-        "numero_laudo": "0170015",
-        "data_emissao": "15/10/2025",
-        "data_validade": "30/10/2025",
-        "cpf_cnpj_cliente": "SFSF",
-        "nome_cliente": "SFSF",
-        "quantidade_caixas": "69",
-        "modelo_caixas": "SFSF"
-    },
-    {
-        "numero_laudo": "0170016",
-        "data_emissao": "15/10/2025",
-        "data_validade": "30/10/2025",
-        "cpf_cnpj_cliente": "SFSF",
-        "nome_cliente": "SFSF",
-        "quantidade_caixas": "27",
-        "modelo_caixas": "SFSF"
-    },
-    {
-        "numero_laudo": "0170017",
-        "data_emissao": "15/10/2025",
-        "data_validade": "30/10/2025",
-        "cpf_cnpj_cliente": "dfgdgd",
-        "nome_cliente": "wewetwt",
-        "quantidade_caixas": "87",
-        "modelo_caixas": "cnvcvncvn"
-    },
-    {
-        "numero_laudo": "0170018",
-        "data_emissao": "15/10/2025",
-        "data_validade": "30/10/2025",
-        "cpf_cnpj_cliente": "sgsgsg",
-        "nome_cliente": "sgsgsdg",
-        "quantidade_caixas": "18",
-        "modelo_caixas": "sgsgs"
-    },
-    {
         "numero_laudo": "0170019",
         "data_emissao": "15/10/2025",
         "data_validade": "30/10/2025",
@@ -99,15 +27,6 @@
         "modelo_caixas": "6424"
     },
     {
-        "numero_laudo": "0170022",
-        "data_emissao": "15/10/2025",
-        "data_validade": "30/10/2025",
-        "cpf_cnpj_cliente": "sgsg",
-        "nome_cliente": "sgsdg",
-        "quantidade_caixas": "43",
-        "modelo_caixas": "sgsg"
-    },
-    {
         "numero_laudo": "0170023",
         "data_emissao": "16/10/2025",
         "data_validade": "31/10/2025",
@@ -126,33 +45,6 @@
         "modelo_caixas": "6424"
     },
     {
-        "numero_laudo": "0170025",
-        "data_emissao": "20/10/2025",
-        "data_validade": "04/11/2025",
-        "cpf_cnpj_cliente": "34535345",
-        "nome_cliente": "dgdfg",
-        "quantidade_caixas": "21",
-        "modelo_caixas": "erterte"
-    },
-    {
-        "numero_laudo": "0170026",
-        "data_emissao": "20/10/2025",
-        "data_validade": "04/11/2025",
-        "cpf_cnpj_cliente": "546456465",
-        "nome_cliente": "sdgsdgs",
-        "quantidade_caixas": "28",
-        "modelo_caixas": "sgsg"
-    },
-    {
-        "numero_laudo": "0170027",
-        "data_emissao": "20/10/2025",
-        "data_validade": "04/11/2025",
-        "cpf_cnpj_cliente": "04098481634",
-        "nome_cliente": "Décius",
-        "quantidade_caixas": "36",
-        "modelo_caixas": "Modelo de Teste"
-    },
-    {
         "numero_laudo": "0170028",
         "data_emissao": "20/10/2025",
         "data_validade": "04/11/2025",
@@ -160,33 +52,6 @@
         "nome_cliente": "José Bastião",
         "quantidade_caixas": "14",
         "modelo_caixas": "37"
-    },
-    {
-        "numero_laudo": "0170029",
-        "data_emissao": "20/10/2025",
-        "data_validade": "04/11/2025",
-        "cpf_cnpj_cliente": "2344524",
-        "nome_cliente": "sfsfs",
-        "quantidade_caixas": "43",
-        "modelo_caixas": "12"
-    },
-    {
-        "numero_laudo": "0170030",
-        "data_emissao": "20/10/2025",
-        "data_validade": "04/11/2025",
-        "cpf_cnpj_cliente": "53225",
-        "nome_cliente": "afasfa",
-        "quantidade_caixas": "34",
-        "modelo_caixas": "fsdfsd"
-    },
-    {
-        "numero_laudo": "0170031",
-        "data_emissao": "20/10/2025",
-        "data_validade": "04/11/2025",
-        "cpf_cnpj_cliente": "53225",
-        "nome_cliente": "afasfa",
-        "quantidade_caixas": "34",
-        "modelo_caixas": "fsdfsd"
     },
     {
         "numero_laudo": "0170032",
@@ -594,15 +459,6 @@
         "modelo_caixas": "6024"
     },
     {
-        "numero_laudo": "0170086",
-        "data_emissao": "28/10/2025",
-        "data_validade": "12/11/2025",
-        "cpf_cnpj_cliente": "454646",
-        "nome_cliente": "dggdg",
-        "quantidade_caixas": "456",
-        "modelo_caixas": "gfhfh"
-    },
-    {
         "numero_laudo": "0170087",
         "data_emissao": "28/10/2025",
         "data_validade": "12/11/2025",
@@ -898,14 +754,5 @@
         "nome_cliente": "UVALE FRUTAS TROPICAIS ",
         "quantidade_caixas": "800",
         "modelo_caixas": "6424"
-    },
-    {
-        "numero_laudo": "0170120",
-        "data_emissao": "03/11/2025",
-        "data_validade": "18/11/2025",
-        "cpf_cnpj_cliente": "343535",
-        "nome_cliente": "dfgdfgdfg",
-        "quantidade_caixas": "45",
-        "modelo_caixas": "dfggdf"
     }
 ]
