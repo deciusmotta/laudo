@@ -781,5 +781,14 @@
         "nome_cliente": "FABRICIO JOSÉ FELIPE",
         "quantidade_caixas": "182",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170124",
+        "data_emissao": "04/11/2025",
+        "data_validade": "19/11/2025",
+        "cpf_cnpj_cliente": "119.465.236-07",
+        "nome_cliente": "JOÃO MARCOS",
+        "quantidade_caixas": "390",
+        "modelo_caixas": "6424"
     }
 ]
