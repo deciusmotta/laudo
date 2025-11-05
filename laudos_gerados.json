@@ -862,5 +862,14 @@
         "nome_cliente": "CARLOS ALBERTO DA SILVA BENTO",
         "quantidade_caixas": "234",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170133",
+        "data_emissao": "05/11/2025",
+        "data_validade": "20/11/2025",
+        "cpf_cnpj_cliente": "071.107.626-02",
+        "nome_cliente": "CARLOS ALBERTO DA SILVA BENTO",
+        "quantidade_caixas": "234",
+        "modelo_caixas": "6424"
     }
 ]
