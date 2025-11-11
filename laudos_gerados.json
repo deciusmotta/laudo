@@ -1141,5 +1141,14 @@
         "nome_cliente": " JOÃO MARCOS",
         "quantidade_caixas": "780",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170164",
+        "data_emissao": "11/11/2025",
+        "data_validade": "26/11/2025",
+        "cpf_cnpj_cliente": " 11946523607",
+        "nome_cliente": " JOÃO MARCOS",
+        "quantidade_caixas": "780",
+        "modelo_caixas": "6424"
     }
 ]
