@@ -25,30 +25,38 @@ def get_next_laudo():
     url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_NUMERACAO}"
 
     r = requests.get(url, headers=headers)
+
     if r.status_code == 200:
-        content = json.loads(base64.b64decode(r.json()["content"]).decode())
+        remote = r.json()
+        sha = remote["sha"]
+        content = json.loads(base64.b64decode(remote["content"]).decode())
         numero = content.get("ultimo_numero", 0) + 1
     else:
+        sha = None
         numero = 1
 
-    # --- Adição: prefixo fixo do higienizador e formatação ---
-    PREFIXO_HIGIENIZADOR = "017"
-    numero_formatado = f"{PREFIXO_HIGIENIZADOR}{numero:04d}"  # Ex: 0170001
+    # Formatação do número
+    PREFIXO = "017"
+    numero_formatado = f"{PREFIXO}{numero:04d}"
 
-    # Atualiza o controle remoto (GitHub)
-    content = {"ultimo_numero": numero}
-    encoded = base64.b64encode(json.dumps(content).encode()).decode()
-
+    # Atualizar arquivo no GitHub
     if GITHUB_TOKEN:
+        novo_conteudo = {"ultimo_numero": numero}
+        encoded = base64.b64encode(json.dumps(novo_conteudo).encode()).decode()
+
         data = {
             "message": f"Atualiza número do laudo {numero_formatado}",
             "content": encoded,
-            "branch": "main",
-            "sha": r.json().get("sha") if r.status_code == 200 else None
+            "branch": "main"
         }
-        requests.put(url, headers=headers, json=data)
+        if sha:       # só envia quando realmente existe
+            data["sha"] = sha
+
+        r_put = requests.put(url, headers=headers, json=data)
+        print("GitHub PUT:", r_put.status_code, r_put.text)
 
     return numero_formatado
+
 
 
 # =====================================================
