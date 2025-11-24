@@ -745,5 +745,14 @@
         "nome_cliente": "gfhhgh",
         "quantidade_caixas": "6435",
         "modelo_caixas": "hjghjfjh"
+    },
+    {
+        "numero_laudo": "0170171",
+        "data_emissao": "24/11/2025",
+        "data_validade": "09/12/2025",
+        "cpf_cnpj_cliente": "345345",
+        "nome_cliente": "gfhhgh",
+        "quantidade_caixas": "6786",
+        "modelo_caixas": "hjghjfjh"
     }
 ]
