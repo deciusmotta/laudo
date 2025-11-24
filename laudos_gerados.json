@@ -745,5 +745,14 @@
         "nome_cliente": "Marcos Gomes De Oliveira ",
         "quantidade_caixas": "540",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170173",
+        "data_emissao": "24/11/2025",
+        "data_validade": "09/12/2025",
+        "cpf_cnpj_cliente": "108.313.156-79",
+        "nome_cliente": "Marcos Gomes De Oliveira ",
+        "quantidade_caixas": "540",
+        "modelo_caixas": "6424"
     }
 ]
