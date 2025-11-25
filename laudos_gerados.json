@@ -862,5 +862,14 @@
         "nome_cliente": "CLEITON PINTO ABRANCHES",
         "quantidade_caixas": "200",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170186",
+        "data_emissao": "25/11/2025",
+        "data_validade": "10/12/2025",
+        "cpf_cnpj_cliente": "09456723658",
+        "nome_cliente": "CLEITON PINTO ABRANCHES",
+        "quantidade_caixas": "200",
+        "modelo_caixas": "6424"
     }
 ]
