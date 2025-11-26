@@ -1096,5 +1096,14 @@
         "nome_cliente": "DIOGO FERNANDES SILVESTRE ALVES",
         "quantidade_caixas": "300",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170212",
+        "data_emissao": "26/11/2025",
+        "data_validade": "11/12/2025",
+        "cpf_cnpj_cliente": "41.851.003/0001-16",
+        "nome_cliente": "CVD ALIMENTOS LTDA",
+        "quantidade_caixas": "438",
+        "modelo_caixas": "6424"
     }
 ]
