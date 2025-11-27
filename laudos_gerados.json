@@ -1114,5 +1114,14 @@
         "nome_cliente": "CVD ALIMENTOS LTDA",
         "quantidade_caixas": "94",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170214",
+        "data_emissao": "27/11/2025",
+        "data_validade": "12/12/2025",
+        "cpf_cnpj_cliente": "86.524.253/0001-80",
+        "nome_cliente": "DISTRIBUIDORA DE FRUTAS ARAGUAIA LTDA",
+        "quantidade_caixas": "780",
+        "modelo_caixas": "6424"
     }
 ]
