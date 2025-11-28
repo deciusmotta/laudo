@@ -1177,5 +1177,14 @@
         "nome_cliente": "DIOGO FERNANDES SILVESTRE ALVES",
         "quantidade_caixas": "200",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170221",
+        "data_emissao": "28/11/2025",
+        "data_validade": "13/12/2025",
+        "cpf_cnpj_cliente": " 86524253000180",
+        "nome_cliente": "Distribuidora De Frutas Araguaia LTDA",
+        "quantidade_caixas": "780",
+        "modelo_caixas": "6424"
     }
 ]
