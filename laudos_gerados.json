@@ -1213,5 +1213,14 @@
         "nome_cliente": "CVD ALIMENTOS LTDA",
         "quantidade_caixas": "400",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170225",
+        "data_emissao": "01/12/2025",
+        "data_validade": "16/12/2025",
+        "cpf_cnpj_cliente": "108.313.156-79",
+        "nome_cliente": "MARCOS GOMES DE OLIVEIRA",
+        "quantidade_caixas": "293",
+        "modelo_caixas": "6424"
     }
 ]
