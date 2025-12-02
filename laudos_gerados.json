@@ -1303,5 +1303,14 @@
         "nome_cliente": "UVALE FRUTAS TROPICAIS ",
         "quantidade_caixas": "800",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170235",
+        "data_emissao": "02/12/2025",
+        "data_validade": "17/12/2025",
+        "cpf_cnpj_cliente": "551.140.246-04",
+        "nome_cliente": "SIDIMAR DA SILVA ",
+        "quantidade_caixas": "200",
+        "modelo_caixas": "6424"
     }
 ]
