@@ -1609,5 +1609,14 @@
         "nome_cliente": "COMERCIAL NOVA ERA BH BH",
         "quantidade_caixas": "234",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170269",
+        "data_emissao": "05/12/2025",
+        "data_validade": "20/12/2025",
+        "cpf_cnpj_cliente": "41.857.334/0001-63",
+        "nome_cliente": "COMERCIAL NOVA ERA BH BH",
+        "quantidade_caixas": "234",
+        "modelo_caixas": "6424"
     }
 ]
