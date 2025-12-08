@@ -1645,5 +1645,14 @@
         "nome_cliente": "MARCOS GOMES DE OLIVEIRA",
         "quantidade_caixas": "800",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170273",
+        "data_emissao": "08/12/2025",
+        "data_validade": "23/12/2025",
+        "cpf_cnpj_cliente": "108.313.156-79",
+        "nome_cliente": "MARCOS GOMES DE OLIVEIRA",
+        "quantidade_caixas": "200",
+        "modelo_caixas": "6424"
     }
 ]
