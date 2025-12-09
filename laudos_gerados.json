@@ -1717,5 +1717,14 @@
         "nome_cliente": "CVD ALIMENTOS LTDA",
         "quantidade_caixas": "200",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170281",
+        "data_emissao": "09/12/2025",
+        "data_validade": "24/12/2025",
+        "cpf_cnpj_cliente": "551.140.246-04",
+        "nome_cliente": "SIDIMAR DA SILVA ",
+        "quantidade_caixas": "200",
+        "modelo_caixas": "6424"
     }
 ]
