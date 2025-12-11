@@ -1888,5 +1888,14 @@
         "nome_cliente": "GILSON GOMES DO CARMO",
         "quantidade_caixas": "147",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170300",
+        "data_emissao": "11/12/2025",
+        "data_validade": "26/12/2025",
+        "cpf_cnpj_cliente": "41851003000116",
+        "nome_cliente": "CVD ALIMENTOS LTDA",
+        "quantidade_caixas": "400",
+        "modelo_caixas": "6424"
     }
 ]
