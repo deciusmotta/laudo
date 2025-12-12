@@ -1969,5 +1969,14 @@
         "nome_cliente": "ANTONIO CUSTODIO GOMES",
         "quantidade_caixas": "208",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170309",
+        "data_emissao": "12/12/2025",
+        "data_validade": "27/12/2025",
+        "cpf_cnpj_cliente": "41.851.003/0001-16",
+        "nome_cliente": "CVD ALIMENTOS LTDA",
+        "quantidade_caixas": "650",
+        "modelo_caixas": "6424"
     }
 ]
