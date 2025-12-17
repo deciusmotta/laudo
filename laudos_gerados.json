@@ -2131,5 +2131,14 @@
         "nome_cliente": "DISTRIBUIDORA DE FRUTAS ARAGUAIA LTDA",
         "quantidade_caixas": "540",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170327",
+        "data_emissao": "17/12/2025",
+        "data_validade": "01/01/2026",
+        "cpf_cnpj_cliente": "072.818.226-26",
+        "nome_cliente": "PALMERIO VITOR DE MELO",
+        "quantidade_caixas": "477",
+        "modelo_caixas": "6424"
     }
 ]
