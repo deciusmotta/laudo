@@ -2410,5 +2410,14 @@
         "nome_cliente": "TIAGO ALEXANDRE BAGETO",
         "quantidade_caixas": "173",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170358",
+        "data_emissao": "19/12/2025",
+        "data_validade": "03/01/2026",
+        "cpf_cnpj_cliente": "101.867.616-35",
+        "nome_cliente": "TIAGO ALEXANDRE BAGETO",
+        "quantidade_caixas": "173",
+        "modelo_caixas": "6424"
     }
 ]
