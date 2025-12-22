@@ -2581,5 +2581,14 @@
         "nome_cliente": "GILSON GOMES DO CARMO",
         "quantidade_caixas": "120",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170377",
+        "data_emissao": "22/12/2025",
+        "data_validade": "06/01/2026",
+        "cpf_cnpj_cliente": "41.857.334/0001-63",
+        "nome_cliente": "COMERCIAL NOVA ERA BH LTDA.",
+        "quantidade_caixas": "234",
+        "modelo_caixas": "6424"
     }
 ]
