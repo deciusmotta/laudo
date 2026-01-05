@@ -3427,5 +3427,14 @@
         "nome_cliente": "CVD ALIMENTOS LTDA",
         "quantidade_caixas": "325",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170472",
+        "data_emissao": "05/01/2026",
+        "data_validade": "20/01/2026",
+        "cpf_cnpj_cliente": "135.609.556-96",
+        "nome_cliente": "JOSÉ FELIPE COSTA CUNHA",
+        "quantidade_caixas": "145",
+        "modelo_caixas": "6424"
     }
 ]
