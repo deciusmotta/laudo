@@ -3553,5 +3553,14 @@
         "nome_cliente": "DISTRIBUIDORA DE FRUTAS LINHARES LTDA.",
         "quantidade_caixas": "296",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170486",
+        "data_emissao": "07/01/2026",
+        "data_validade": "22/01/2026",
+        "cpf_cnpj_cliente": "65.354.987/0003-50",
+        "nome_cliente": "DISTRIBUIDORA DE FRUTAS LINHARES LTDA.",
+        "quantidade_caixas": "296",
+        "modelo_caixas": "6424"
     }
 ]
