@@ -3499,5 +3499,14 @@
         "nome_cliente": "DISTRIBUIDORA DE FRUTAS LINHARES LTDA",
         "quantidade_caixas": "500",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170480",
+        "data_emissao": "07/01/2026",
+        "data_validade": "22/01/2026",
+        "cpf_cnpj_cliente": "135.609.556-96",
+        "nome_cliente": "FELIPE JOSÉ COSTA CUNHA",
+        "quantidade_caixas": "170",
+        "modelo_caixas": "6424"
     }
 ]
