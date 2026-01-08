@@ -3571,5 +3571,14 @@
         "nome_cliente": "DISTRIBUIDORA DE FRUTAS LINHARES LTDA.",
         "quantidade_caixas": "296",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170488",
+        "data_emissao": "08/01/2026",
+        "data_validade": "23/01/2026",
+        "cpf_cnpj_cliente": "19.886.150/0005-04",
+        "nome_cliente": "UVALE FRUTAS TROPICAIS ",
+        "quantidade_caixas": "800",
+        "modelo_caixas": "6424"
     }
 ]
