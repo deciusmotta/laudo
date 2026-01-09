@@ -3688,5 +3688,14 @@
         "nome_cliente": "DISTRIBUIDORA DE FRUTAS LINHARES LTDA.",
         "quantidade_caixas": "900",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170501",
+        "data_emissao": "09/01/2026",
+        "data_validade": "24/01/2026",
+        "cpf_cnpj_cliente": "199.483.606-72",
+        "nome_cliente": "ANTÔNIO CUSTÓDIO GOMES",
+        "quantidade_caixas": "148",
+        "modelo_caixas": "6424"
     }
 ]
