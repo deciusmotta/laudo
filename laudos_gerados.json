@@ -3751,5 +3751,14 @@
         "nome_cliente": "DISTRIBUIDORA DE FRUTAS LINHARES LTDA.",
         "quantidade_caixas": "450",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170508",
+        "data_emissao": "09/01/2026",
+        "data_validade": "24/01/2026",
+        "cpf_cnpj_cliente": "86524253000180",
+        "nome_cliente": "Distribuidora De Frutas Araguaia LTDA",
+        "quantidade_caixas": "350",
+        "modelo_caixas": "6424"
     }
 ]
