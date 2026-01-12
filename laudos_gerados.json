@@ -3913,5 +3913,14 @@
         "nome_cliente": "DISTRIBUIDORA DE FRUTAS ARAGUAIA LTDA",
         "quantidade_caixas": "365",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170526",
+        "data_emissao": "12/01/2026",
+        "data_validade": "27/01/2026",
+        "cpf_cnpj_cliente": "41.857.334/001-63",
+        "nome_cliente": "COMERCIAL NOVA ERA BH LTDA",
+        "quantidade_caixas": "234",
+        "modelo_caixas": "6424"
     }
 ]
