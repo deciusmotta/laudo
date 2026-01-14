@@ -4084,5 +4084,14 @@
         "nome_cliente": "DISTRIBUIDORA DE FRUTAS LINHARES LTDA.",
         "quantidade_caixas": "412",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170545",
+        "data_emissao": "14/01/2026",
+        "data_validade": "29/01/2026",
+        "cpf_cnpj_cliente": "13560955696",
+        "nome_cliente": "FELIPE JOSÉ",
+        "quantidade_caixas": "200",
+        "modelo_caixas": "6424"
     }
 ]
