@@ -4165,5 +4165,14 @@
         "nome_cliente": "Claudio Fidelis",
         "quantidade_caixas": "1000",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170554",
+        "data_emissao": "15/01/2026",
+        "data_validade": "30/01/2026",
+        "cpf_cnpj_cliente": "937.418.806-63",
+        "nome_cliente": "GILSON GOMES DO CARMO",
+        "quantidade_caixas": "130",
+        "modelo_caixas": "6424"
     }
 ]
