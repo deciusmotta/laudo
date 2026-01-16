@@ -4255,5 +4255,14 @@
         "nome_cliente": "BRASNICA",
         "quantidade_caixas": "500",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170564",
+        "data_emissao": "16/01/2026",
+        "data_validade": "31/01/2026",
+        "cpf_cnpj_cliente": "04511064000108",
+        "nome_cliente": "BRASNICA",
+        "quantidade_caixas": "500",
+        "modelo_caixas": "6424"
     }
 ]
