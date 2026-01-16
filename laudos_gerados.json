@@ -4273,5 +4273,14 @@
         "nome_cliente": "BRASNICA",
         "quantidade_caixas": "500",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170566",
+        "data_emissao": "16/01/2026",
+        "data_validade": "31/01/2026",
+        "cpf_cnpj_cliente": "19.886.150/0005-04",
+        "nome_cliente": "UVALE FRUTAS TROPICAIS ",
+        "quantidade_caixas": "800",
+        "modelo_caixas": "6424"
     }
 ]
