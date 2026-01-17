@@ -4300,5 +4300,14 @@
         "nome_cliente": " Distribuidora De Frutas Araguaia LTDA",
         "quantidade_caixas": "350",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170569",
+        "data_emissao": "17/01/2026",
+        "data_validade": "01/02/2026",
+        "cpf_cnpj_cliente": "41.851.003/0001-16",
+        "nome_cliente": "CVD ALIMENTOS LTDA.",
+        "quantidade_caixas": "247",
+        "modelo_caixas": "6424"
     }
 ]
