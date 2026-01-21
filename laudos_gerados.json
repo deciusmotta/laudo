@@ -4597,5 +4597,14 @@
         "nome_cliente": "Saulo",
         "quantidade_caixas": "125",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170602",
+        "data_emissao": "21/01/2026",
+        "data_validade": "05/02/2026",
+        "cpf_cnpj_cliente": "",
+        "nome_cliente": "Saulo",
+        "quantidade_caixas": "125",
+        "modelo_caixas": "6424"
     }
 ]
