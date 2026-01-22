@@ -4624,5 +4624,14 @@
         "nome_cliente": "COMERCIAL NOVA ERA LTDA",
         "quantidade_caixas": "234",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170605",
+        "data_emissao": "22/01/2026",
+        "data_validade": "06/02/2026",
+        "cpf_cnpj_cliente": "41.857.334/0001-63",
+        "nome_cliente": "COMERCIAL NOVA ERA LTDA",
+        "quantidade_caixas": "234",
+        "modelo_caixas": "6424"
     }
 ]
