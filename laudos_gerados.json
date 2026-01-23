@@ -4642,5 +4642,14 @@
         "nome_cliente": "PLUTÃO ",
         "quantidade_caixas": "260",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170607",
+        "data_emissao": "23/01/2026",
+        "data_validade": "07/02/2026",
+        "cpf_cnpj_cliente": " 39389466873",
+        "nome_cliente": "PLUTÃO ",
+        "quantidade_caixas": "260",
+        "modelo_caixas": "6424"
     }
 ]
