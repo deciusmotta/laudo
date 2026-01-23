@@ -4813,5 +4813,14 @@
         "nome_cliente": "FELIPE JOSÉ COSTA CUNHA",
         "quantidade_caixas": "120",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170625",
+        "data_emissao": "23/01/2026",
+        "data_validade": "07/02/2026",
+        "cpf_cnpj_cliente": "13560955696",
+        "nome_cliente": "FELIPE JOSÉ COSTA CUNHA",
+        "quantidade_caixas": "120",
+        "modelo_caixas": "6424"
     }
 ]
