@@ -5281,5 +5281,14 @@
         "nome_cliente": "Cláudio ML",
         "quantidade_caixas": "260",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170677",
+        "data_emissao": "31/01/2026",
+        "data_validade": "15/02/2026",
+        "cpf_cnpj_cliente": "",
+        "nome_cliente": "Cláudio ML",
+        "quantidade_caixas": "260",
+        "modelo_caixas": "6424"
     }
 ]
