@@ -5947,5 +5947,14 @@
         "nome_cliente": "BRASNICA",
         "quantidade_caixas": "475",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170751",
+        "data_emissao": "10/02/2026",
+        "data_validade": "25/02/2026",
+        "cpf_cnpj_cliente": "064.510.966-52",
+        "nome_cliente": "LEONARDO NEVES",
+        "quantidade_caixas": "416",
+        "modelo_caixas": "6424"
     }
 ]
