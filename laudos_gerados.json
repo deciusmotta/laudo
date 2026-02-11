@@ -5983,5 +5983,14 @@
         "nome_cliente": "DISTRIBUIDORA DE FRUTAS ARAGUAIA LTDA",
         "quantidade_caixas": "350",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170755",
+        "data_emissao": "11/02/2026",
+        "data_validade": "26/02/2026",
+        "cpf_cnpj_cliente": "04511064000108",
+        "nome_cliente": "FRUTAS AMAZONAS LTDA",
+        "quantidade_caixas": "500",
+        "modelo_caixas": "6424"
     }
 ]
