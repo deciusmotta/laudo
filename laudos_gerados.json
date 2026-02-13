@@ -6109,5 +6109,14 @@
         "nome_cliente": "BRASNICA",
         "quantidade_caixas": "600",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170769",
+        "data_emissao": "13/02/2026",
+        "data_validade": "28/02/2026",
+        "cpf_cnpj_cliente": "41.857.334/0001-63",
+        "nome_cliente": "COMERCIAL NOVA ERA BH ",
+        "quantidade_caixas": "234",
+        "modelo_caixas": "6424"
     }
 ]
