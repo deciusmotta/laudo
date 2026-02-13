@@ -6163,5 +6163,14 @@
         "nome_cliente": "PLUTÃO ",
         "quantidade_caixas": "286",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170775",
+        "data_emissao": "13/02/2026",
+        "data_validade": "28/02/2026",
+        "cpf_cnpj_cliente": "045.110.640/00001-08",
+        "nome_cliente": "BRASNICA",
+        "quantidade_caixas": "700",
+        "modelo_caixas": "6424"
     }
 ]
