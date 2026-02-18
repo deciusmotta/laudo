@@ -6289,5 +6289,14 @@
         "nome_cliente": "ELIAS SILVA",
         "quantidade_caixas": "200",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170789",
+        "data_emissao": "18/02/2026",
+        "data_validade": "05/03/2026",
+        "cpf_cnpj_cliente": "391.281.486-49",
+        "nome_cliente": "ELIAS SILVA",
+        "quantidade_caixas": "200",
+        "modelo_caixas": "6424"
     }
 ]
