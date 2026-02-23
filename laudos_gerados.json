@@ -6622,5 +6622,14 @@
         "nome_cliente": "FRUTAS AMAZONAS LTDA",
         "quantidade_caixas": "800",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170826",
+        "data_emissao": "23/02/2026",
+        "data_validade": "10/03/2026",
+        "cpf_cnpj_cliente": "045.110.640/00001-08",
+        "nome_cliente": "FRUTAS AMAZONAS LTDA",
+        "quantidade_caixas": "1000",
+        "modelo_caixas": "6424"
     }
 ]
