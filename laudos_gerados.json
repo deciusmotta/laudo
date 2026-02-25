@@ -6685,5 +6685,14 @@
         "nome_cliente": "PLUTÃO ",
         "quantidade_caixas": "520",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170833",
+        "data_emissao": "25/02/2026",
+        "data_validade": "12/03/2026",
+        "cpf_cnpj_cliente": "41.851.003/0001-16",
+        "nome_cliente": "CVD ALIMENTOS LTDA.",
+        "quantidade_caixas": "220",
+        "modelo_caixas": "6424"
     }
 ]
