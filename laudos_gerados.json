@@ -7198,5 +7198,14 @@
         "nome_cliente": "SIDIMAR DA SILVA ",
         "quantidade_caixas": "200",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170890",
+        "data_emissao": "06/03/2026",
+        "data_validade": "21/03/2026",
+        "cpf_cnpj_cliente": "55114024604",
+        "nome_cliente": "SIDIMAR DA SILVA ",
+        "quantidade_caixas": "200",
+        "modelo_caixas": "6424"
     }
 ]
