@@ -7351,5 +7351,14 @@
         "nome_cliente": "DISTRIBUIDORA DE FRUTAS LINHARES LTDA",
         "quantidade_caixas": "400",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170907",
+        "data_emissao": "12/03/2026",
+        "data_validade": "27/03/2026",
+        "cpf_cnpj_cliente": ":55114024604",
+        "nome_cliente": "Sidmar da Silva ",
+        "quantidade_caixas": "200",
+        "modelo_caixas": "6424"
     }
 ]
