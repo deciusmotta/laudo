@@ -7540,5 +7540,14 @@
         "nome_cliente": "COMERCIAL NOVA ERA BH LTDA.",
         "quantidade_caixas": "234",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170928",
+        "data_emissao": "16/03/2026",
+        "data_validade": "31/03/2026",
+        "cpf_cnpj_cliente": "551.140.246-04",
+        "nome_cliente": "SIDIMAR DA SILVA ",
+        "quantidade_caixas": "140",
+        "modelo_caixas": "6424"
     }
 ]
