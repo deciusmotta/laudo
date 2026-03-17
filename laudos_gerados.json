@@ -7594,5 +7594,14 @@
         "nome_cliente": "CVD ALIMENTOS LTDA.",
         "quantidade_caixas": "240",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170934",
+        "data_emissao": "17/03/2026",
+        "data_validade": "01/04/2026",
+        "cpf_cnpj_cliente": " 02.292.966/0001-75",
+        "nome_cliente": "CITROMAR LTDA.",
+        "quantidade_caixas": "900",
+        "modelo_caixas": "6424"
     }
 ]
