@@ -7630,5 +7630,14 @@
         "nome_cliente": "ANTONIO CUSTODIO GOMES",
         "quantidade_caixas": "200",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170938",
+        "data_emissao": "18/03/2026",
+        "data_validade": "02/04/2026",
+        "cpf_cnpj_cliente": "199.483.606-72",
+        "nome_cliente": "ANTONIO CUSTODIO GOMES",
+        "quantidade_caixas": "200",
+        "modelo_caixas": "6424"
     }
 ]
