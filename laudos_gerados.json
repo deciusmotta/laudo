@@ -7648,5 +7648,14 @@
         "nome_cliente": "ANTONIO CUSTODIO GOMES",
         "quantidade_caixas": "200",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170940",
+        "data_emissao": "18/03/2026",
+        "data_validade": "02/04/2026",
+        "cpf_cnpj_cliente": "071.544.346-19",
+        "nome_cliente": "GERALDO GREYCK RODRIGUES FONSECA",
+        "quantidade_caixas": "400",
+        "modelo_caixas": "6424"
     }
 ]
