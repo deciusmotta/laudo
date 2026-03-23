@@ -7963,5 +7963,14 @@
         "nome_cliente": "CVD ALIMENTOS LTDA.",
         "quantidade_caixas": "450",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170975",
+        "data_emissao": "23/03/2026",
+        "data_validade": "07/04/2026",
+        "cpf_cnpj_cliente": " 071.544.346-19",
+        "nome_cliente": "GERALDO GREYCK RODRIGUES FONSECA",
+        "quantidade_caixas": "342",
+        "modelo_caixas": "6424"
     }
 ]
