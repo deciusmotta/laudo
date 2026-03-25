@@ -8062,5 +8062,14 @@
         "nome_cliente": "CITROMAR LTDA ",
         "quantidade_caixas": "234",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170986",
+        "data_emissao": "25/03/2026",
+        "data_validade": "09/04/2026",
+        "cpf_cnpj_cliente": "02292966/0001-75",
+        "nome_cliente": "CITROMAR LTDA ",
+        "quantidade_caixas": "234",
+        "modelo_caixas": "6424"
     }
 ]
