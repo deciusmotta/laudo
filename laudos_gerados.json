@@ -8026,5 +8026,14 @@
         "nome_cliente": "COMERCIAL NOVA ERA BH LTDA.",
         "quantidade_caixas": "165",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0170982",
+        "data_emissao": "25/03/2026",
+        "data_validade": "09/04/2026",
+        "cpf_cnpj_cliente": " 071.544.346-19",
+        "nome_cliente": "GERALDO GREYCK",
+        "quantidade_caixas": "410",
+        "modelo_caixas": "6424"
     }
 ]
