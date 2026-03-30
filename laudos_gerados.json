@@ -8440,5 +8440,14 @@
         "nome_cliente": "PLUTÃO ",
         "quantidade_caixas": "257",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0171028",
+        "data_emissao": "30/03/2026",
+        "data_validade": "14/04/2026",
+        "cpf_cnpj_cliente": "10.602.550/0001-34",
+        "nome_cliente": "PLUTÃO ",
+        "quantidade_caixas": "257",
+        "modelo_caixas": "6424"
     }
 ]
