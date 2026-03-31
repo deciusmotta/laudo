@@ -8656,5 +8656,14 @@
         "nome_cliente": "CVD ALIMENTOS LTDA",
         "quantidade_caixas": "198",
         "modelo_caixas": "6424"
+    },
+    {
+        "numero_laudo": "0171052",
+        "data_emissao": "31/03/2026",
+        "data_validade": "15/04/2026",
+        "cpf_cnpj_cliente": "41.851.003/0001-16",
+        "nome_cliente": "CVD ALIMENTOS LTDA",
+        "quantidade_caixas": "198",
+        "modelo_caixas": "6424"
     }
 ]
